@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurante El Sabor — Demo</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--orange:#e8650a;--warm:#faf4ec;--dark:#1a0e06;--card:#221508;}
+    body{background:var(--dark);color:var(--warm);font-family:'Segoe UI',Arial,sans-serif;overflow-x:hidden;}
+
+    .demo-badge{position:fixed;top:12px;right:12px;z-index:999;background:#7c6aff;color:#fff;font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:20px;}
+    .back-btn{position:fixed;top:12px;left:12px;z-index:999;background:rgba(0,0,0,.7);color:#fff;font-size:11px;letter-spacing:2px;padding:8px 16px;border-radius:8px;text-decoration:none;border:1px solid #333;transition:all .3s;}
+    .back-btn:hover{background:#fff;color:#000;}
+
+    /* NAV */
+    nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(26,14,6,.95);border-bottom:1px solid #3a2010;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;}
+    .logo{font-family:Georgia,serif;font-size:20px;color:var(--orange);letter-spacing:2px;}
+    .nav-links{display:flex;gap:24px;list-style:none;}
+    .nav-links a{color:#a07040;font-size:12px;letter-spacing:2px;text-decoration:none;}
+    .nav-links a:hover{color:var(--orange);}
+    .nav-cta{padding:8px 18px;background:var(--orange);color:#fff;font-size:11px;letter-spacing:2px;border:none;cursor:pointer;}
+    @media(max-width:600px){.nav-links{display:none;}}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 5% 60px;background:radial-gradient(ellipse at center,#2a1208 0%,var(--dark) 70%);}
+    .hero-badge{font-size:10px;letter-spacing:4px;color:var(--orange);border:1px solid #3a2010;padding:6px 16px;border-radius:20px;display:inline-block;margin-bottom:24px;}
+    .hero h1{font-family:Georgia,serif;font-size:clamp(36px,7vw,72px);font-weight:400;line-height:1.15;margin-bottom:20px;}
+    .hero h1 em{color:var(--orange);font-style:italic;}
+    .hero p{font-size:16px;color:#7a5030;line-height:1.9;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto;}
+    .btn-orange{padding:14px 32px;background:var(--orange);color:#fff;font-size:12px;letter-spacing:2px;border:none;cursor:pointer;border-radius:2px;transition:opacity .3s;}
+    .btn-orange:hover{opacity:.85;}
+    .btn-outline-o{padding:14px 32px;background:transparent;color:var(--orange);font-size:12px;letter-spacing:2px;border:1px solid #3a2010;cursor:pointer;margin-left:12px;}
+
+    /* MENU */
+    section{padding:80px 5%;}
+    .inner{max-width:1100px;margin:0 auto;}
+    .sec-label{font-size:10px;letter-spacing:4px;color:var(--orange);margin-bottom:12px;}
+    .sec-title{font-family:Georgia,serif;font-size:clamp(26px,4vw,42px);font-weight:400;margin-bottom:16px;}
+    .sec-sub{color:#7a5030;font-size:15px;line-height:1.9;max-width:500px;}
+
+    .menu-tabs{display:flex;gap:0;margin:40px 0 28px;border-bottom:1px solid #3a2010;flex-wrap:wrap;}
+    .menu-tab{padding:10px 22px;font-size:12px;letter-spacing:2px;color:#7a5030;cursor:pointer;border-bottom:2px solid transparent;transition:all .3s;}
+    .menu-tab.active{color:var(--orange);border-bottom-color:var(--orange);}
+
+    .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+    .menu-item{background:var(--card);border:1px solid #3a2010;border-radius:4px;padding:18px;display:flex;align-items:center;gap:14px;transition:border .3s;}
+    .menu-item:hover{border-color:#7a4020;}
+    .menu-emoji{font-size:32px;flex-shrink:0;}
+    .menu-info h3{font-size:15px;font-family:Georgia,serif;margin-bottom:4px;}
+    .menu-info p{font-size:12px;color:#7a5030;line-height:1.6;}
+    .menu-price{font-size:16px;color:var(--orange);font-family:Georgia,serif;margin-top:6px;}
+
+    .menu-section{display:none;}
+    .menu-section.active{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+
+    /* RESERVAS */
+    .reserva-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:48px;align-items:start;}
+    .reserva-info h3{font-family:Georgia,serif;font-size:20px;margin-bottom:14px;}
+    .reserva-info p{color:#7a5030;font-size:14px;line-height:1.9;margin-bottom:20px;}
+    .horario{border:1px solid #3a2010;padding:14px;border-radius:4px;}
+    .horario-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2a1008;font-size:13px;color:#a07040;}
+    .horario-item:last-child{border:none;}
+    .res-form{background:var(--card);border:1px solid #3a2010;padding:28px;border-radius:4px;}
+    .rfield{margin-bottom:14px;}
+    .rfield label{display:block;font-size:10px;letter-spacing:2px;color:#7a5030;margin-bottom:6px;}
+    .rfield input,.rfield select{width:100%;background:#100804;border:1px solid #3a2010;padding:10px 14px;color:var(--warm);font-size:14px;outline:none;font-family:inherit;}
+    .rfield input:focus,.rfield select:focus{border-color:var(--orange);}
+    .rfield select option{background:#1a0e06;}
+    .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+    /* GALERÍA */
+    .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:40px;}
+    .gal-card{aspect-ratio:1;background:var(--card);border:1px solid #3a2010;display:flex;align-items:center;justify-content:center;font-size:36px;cursor:pointer;transition:all .3s;}
+    .gal-card:hover{border-color:var(--orange);transform:scale(1.03);}
+    .gal-card:first-child{grid-column:span 2;grid-row:span 2;font-size:60px;}
+
+    footer{padding:36px 5%;background:#100804;border-top:1px solid #3a2010;text-align:center;}
+    footer p{color:#5a3010;font-size:12px;letter-spacing:2px;}
+
+    @media(max-width:768px){
+      .reserva-wrap{grid-template-columns:1fr;}
+      .gal-grid{grid-template-columns:repeat(2,1fr);}
+      .gal-card:first-child{grid-column:span 2;}
+      .res-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Volver</a>
+  <div class="demo-badge">DEMO — Webflow CO.</div>
+
+  <nav>
+    <div class="logo">El Sabor</div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#reservas">Reservas</a></li>
+      <li><a href="#galeria">Galería</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('reservas').scrollIntoView({behavior:'smooth'})">Reservar mesa</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div>
+      <div class="hero-badge">COCINA COLOMBIANA · BUCARAMANGA</div>
+      <h1>Sabor que<br><em>te enamora</em></h1>
+      <p>Más de 10 años deleitando paladares con la mejor cocina colombiana. Ingredientes frescos, recetas auténticas y ambiente inigualable.</p>
+      <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:12px;">
+        <button class="btn-orange" onclick="document.getElementById('reservas').scrollIntoView({behavior:'smooth'})">RESERVAR MESA</button>
+        <button class="btn-outline-o" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Ver menú</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENÚ -->
+  <section id="menu" style="background:#120a04;">
+    <div class="inner">
+      <div class="sec-label">MENÚ DIGITAL</div>
+      <h2 class="sec-title">Lo mejor de Colombia<br>en tu mesa</h2>
+      <div class="menu-tabs">
+        <div class="menu-tab active" onclick="showMenu('entradas', this)">Entradas</div>
+        <div class="menu-tab" onclick="showMenu('principales', this)">Platos principales</div>
+        <div class="menu-tab" onclick="showMenu('postres', this)">Postres</div>
+        <div class="menu-tab" onclick="showMenu('bebidas', this)">Bebidas</div>
+      </div>
+
+      <div class="menu-section active" id="menu-entradas">
+        <div class="menu-item"><span class="menu-emoji">🥗</span><div class="menu-info"><h3>Ensalada fresca</h3><p>Mezclum, tomate cherry, aguacate, vinagreta</p><div class="menu-price">$18K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🫔</span><div class="menu-info"><h3>Empanadas criollas</h3><p>Rellenas de carne, papa y guiso colombiano</p><div class="menu-price">$15K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🍲</span><div class="menu-info"><h3>Sopa del día</h3><p>Changua, ajiaco o sopa de lentejas</p><div class="menu-price">$22K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🧀</span><div class="menu-info"><h3>Buñuelos artesanales</h3><p>Fritos al momento, con hogao y ají</p><div class="menu-price">$12K</div></div></div>
+      </div>
+
+      <div class="menu-section" id="menu-principales">
+        <div class="menu-item"><span class="menu-emoji">🍖</span><div class="menu-info"><h3>Bandeja paisa</h3><p>Frijoles, chicharrón, chorizo, arepa, huevo</p><div class="menu-price">$42K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🐟</span><div class="menu-info"><h3>Trucha al ajillo</h3><p>Trucha fresca con mantequilla, limón y papas</p><div class="menu-price">$48K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🥩</span><div class="menu-info"><h3>Lomo fino a la parrilla</h3><p>Con yuca frita, ensalada y chimichurri</p><div class="menu-price">$56K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🍗</span><div class="menu-info"><h3>Pollo campesino</h3><p>Estofado con verduras del campo y arroz</p><div class="menu-price">$36K</div></div></div>
+      </div>
+
+      <div class="menu-section" id="menu-postres">
+        <div class="menu-item"><span class="menu-emoji">🍮</span><div class="menu-info"><h3>Flan de leche</h3><p>Cremoso, con arequipe y fruta fresca</p><div class="menu-price">$14K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🍪</span><div class="menu-info"><h3>Tres leches</h3><p>Bizcocho bañado en tres tipos de leche</p><div class="menu-price">$16K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🧇</span><div class="menu-info"><h3>Obleas con arequipe</h3><p>Tradicional colombiano con toppings</p><div class="menu-price">$10K</div></div></div>
+      </div>
+
+      <div class="menu-section" id="menu-bebidas">
+        <div class="menu-item"><span class="menu-emoji">🥤</span><div class="menu-info"><h3>Limonada de coco</h3><p>Refrescante, con hielo y coco rallado</p><div class="menu-price">$12K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">☕</span><div class="menu-info"><h3>Café especial</h3><p>Café de origen colombiano, varias preparaciones</p><div class="menu-price">$8K</div></div></div>
+        <div class="menu-item"><span class="menu-emoji">🧃</span><div class="menu-info"><h3>Jugo natural</h3><p>Mango, guanábana, maracuyá o lulo</p><div class="menu-price">$10K</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVAS -->
+  <section id="reservas">
+    <div class="inner">
+      <div class="sec-label">RESERVAS</div>
+      <h2 class="sec-title">Reserva tu mesa</h2>
+      <div class="reserva-wrap">
+        <div class="reserva-info">
+          <h3>¿Cuándo nos visitas?</h3>
+          <p>Reserva con anticipación y garantiza tu mesa. Atendemos grupos, eventos especiales y celebraciones.</p>
+          <div class="horario">
+            <div style="font-size:10px;letter-spacing:3px;color:var(--orange);margin-bottom:10px;">HORARIOS</div>
+            <div class="horario-item"><span>Lunes – Viernes</span><span>12pm – 9pm</span></div>
+            <div class="horario-item"><span>Sábados</span><span>11am – 10pm</span></div>
+            <div class="horario-item"><span>Domingos</span><span>11am – 6pm</span></div>
+          </div>
+        </div>
+        <div class="res-form">
+          <div class="res-grid">
+            <div class="rfield"><label>NOMBRE</label><input type="text" placeholder="Tu nombre"/></div>
+            <div class="rfield"><label>TELÉFONO</label><input type="tel" placeholder="+57 300..."/></div>
+            <div class="rfield"><label>FECHA</label><input type="date"/></div>
+            <div class="rfield"><label>HORA</label>
+              <select><option>12:00pm</option><option>1:00pm</option><option>7:00pm</option><option>8:00pm</option></select>
+            </div>
+          </div>
+          <div class="rfield"><label>PERSONAS</label>
+            <select><option>1-2</option><option>3-4</option><option>5-8</option><option>Grupo especial (9+)</option></select>
+          </div>
+          <div class="rfield"><label>OCASIÓN ESPECIAL</label>
+            <select><option>Ninguna</option><option>Cumpleaños</option><option>Aniversario</option><option>Reunión de negocios</option></select>
+          </div>
+          <button class="btn-orange" style="width:100%;" onclick="alert('¡Reserva confirmada! Te llamaremos para confirmar tu mesa.')">CONFIRMAR RESERVA</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria" style="background:#120a04;">
+    <div class="inner">
+      <div class="sec-label">GALERÍA</div>
+      <h2 class="sec-title">Nuestro ambiente</h2>
+      <div class="gal-grid">
+        <div class="gal-card">🍽️</div>
+        <div class="gal-card">🌿</div>
+        <div class="gal-card">🥘</div>
+        <div class="gal-card">🎵</div>
+        <div class="gal-card">🕯️</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Restaurante El Sabor · Bucaramanga, Colombia</p>
+    <p style="margin-top:8px;font-size:10px;">Sitio desarrollado por <a href="index.html" style="color:var(--orange);">Webflow CO.</a></p>
+  </footer>
+
+  <script>
+    function showMenu(id, btn){
+      document.querySelectorAll('.menu-section').forEach(s=>s.classList.remove('active'));
+      document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));
+      document.getElementById('menu-'+id).classList.add('active');
+      btn.classList.add('active');
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});
+    });
+  </script>
+</body>
+</html>

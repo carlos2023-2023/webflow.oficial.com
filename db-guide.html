@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Base de Datos — Webflow CO.</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--bg:#08080a;--card:#0f0f14;--border:#1f1f2e;--w:#f0f0f8;--g:#6b7280;--accent:#7c6aff;--green:#10b981;--yellow:#f59e0b;}
+    body{background:var(--bg);color:var(--w);font-family:'Segoe UI',Arial,sans-serif;padding:40px 5%;max-width:900px;margin:0 auto;line-height:1.7;}
+    .back-btn{display:inline-block;background:var(--card);color:var(--w);font-size:11px;letter-spacing:2px;padding:8px 16px;border-radius:8px;text-decoration:none;border:1px solid var(--border);transition:all .3s;margin-bottom:40px;}
+    .back-btn:hover{border-color:#888;}
+    h1{font-family:Georgia,serif;font-size:clamp(28px,5vw,44px);margin-bottom:8px;font-weight:400;}
+    .badge{display:inline-block;background:var(--accent);color:#fff;font-size:10px;letter-spacing:2px;padding:4px 12px;border-radius:20px;margin-bottom:28px;}
+    .intro{color:var(--g);font-size:15px;line-height:1.9;margin-bottom:40px;max-width:640px;}
+    h2{font-size:16px;letter-spacing:2px;color:var(--accent);margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+    h3{font-size:14px;font-weight:600;margin-bottom:8px;}
+    p{color:var(--g);font-size:14px;line-height:1.8;margin-bottom:12px;}
+    pre{background:#05050a;border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;font-size:12px;line-height:1.8;color:#a78bfa;margin:16px 0;}
+    .comment{color:#4a5568;}
+    .keyword{color:#7c6aff;}
+    .string{color:#10b981;}
+    .func{color:#f59e0b;}
+    .db-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;}
+    .db-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    .db-icon{font-size:24px;}
+    .db-title{font-size:15px;font-weight:600;}
+    .db-tag{font-size:9px;letter-spacing:2px;padding:3px 10px;border-radius:10px;}
+    .tag-green{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.2);}
+    .tag-yellow{background:rgba(245,158,11,.12);color:var(--yellow);border:1px solid rgba(245,158,11,.2);}
+    .tag-purple{background:rgba(124,106,255,.12);color:var(--accent);border:1px solid rgba(124,106,255,.2);}
+    .step{display:flex;gap:14px;margin-bottom:20px;}
+    .step-num{width:28px;height:28px;background:rgba(124,106,255,.15);border:1px solid rgba(124,106,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--accent);flex-shrink:0;margin-top:2px;}
+    .step-content h3{font-size:14px;margin-bottom:4px;}
+    .step-content p{margin-bottom:0;}
+    footer{border-top:1px solid var(--border);padding-top:28px;margin-top:48px;text-align:center;color:var(--g);font-size:12px;letter-spacing:1px;}
+  </style>
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Volver al sitio</a>
+
+  <div class="badge">GUÍA TÉCNICA</div>
+  <h1>Cómo conectar<br>una base de datos</h1>
+  <p class="intro">Esta guía explica las opciones más populares para agregar una base de datos a tu proyecto web. Desde soluciones gratuitas hasta opciones empresariales.</p>
+
+  <!-- ============================================================ -->
+  <h2>1. OPCIONES DISPONIBLES</h2>
+
+  <div class="db-card">
+    <div class="db-card-header">
+      <div class="db-icon">🔥</div>
+      <div class="db-title">Firebase (Firestore)</div>
+      <span class="db-tag tag-green">RECOMENDADO</span>
+    </div>
+    <p>Base de datos NoSQL en tiempo real de Google. Sin servidor, fácil de integrar con HTML/JS puro. Perfecta para formularios de contacto, reservas y paneles admin.</p>
+    <p><strong style="color:var(--w);">Gratis hasta:</strong> 50k lecturas / 20k escrituras por día.</p>
+  </div>
+
+  <div class="db-card">
+    <div class="db-card-header">
+      <div class="db-icon">🐘</div>
+      <div class="db-title">Supabase (PostgreSQL)</div>
+      <span class="db-tag tag-yellow">POPULAR</span>
+    </div>
+    <p>Alternativa open-source a Firebase con PostgreSQL. Incluye autenticación, storage de archivos y API REST automática. Ideal para proyectos con más estructura.</p>
+    <p><strong style="color:var(--w);">Gratis hasta:</strong> 500MB de base de datos, 2GB de storage.</p>
+  </div>
+
+  <div class="db-card">
+    <div class="db-card-header">
+      <div class="db-icon">🍃</div>
+      <div class="db-title">MongoDB Atlas</div>
+      <span class="db-tag tag-purple">AVANZADO</span>
+    </div>
+    <p>Base de datos NoSQL en la nube. Perfecta para proyectos con datos complejos y consultas avanzadas. Requiere un backend (Node.js, Express).</p>
+    <p><strong style="color:var(--w);">Gratis hasta:</strong> 512MB de almacenamiento.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>2. FIREBASE — INSTALACIÓN PASO A PASO</h2>
+
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Crear proyecto en Firebase</h3><p>Ve a <strong style="color:var(--accent);">console.firebase.google.com</strong> → "Agregar proyecto" → sigue el asistente (sin Analytics está bien).</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Activar Firestore Database</h3><p>En el panel izquierdo → "Firestore Database" → "Crear base de datos" → Modo de prueba (30 días gratis sin reglas).</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h3>Obtener las credenciales</h3><p>Configuración del proyecto (⚙) → "Tus apps" → Agrega app web → Copia el objeto <code style="color:var(--accent);">firebaseConfig</code>.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Agregar al HTML</h3><p>Agrega los scripts de Firebase a tu página y copia tu configuración.</p></div></div>
+
+  <pre><span class="comment">&lt;!-- En tu index.html antes del cierre de &lt;/body&gt; --&gt;</span>
+&lt;script type="module"&gt;
+  <span class="keyword">import</span> { initializeApp } <span class="keyword">from</span> <span class="string">"https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"</span>;
+  <span class="keyword">import</span> { getFirestore, collection, addDoc, getDocs, query, orderBy }
+    <span class="keyword">from</span> <span class="string">"https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"</span>;
+
+  <span class="comment">// Tu configuración (de la consola de Firebase)</span>
+  <span class="keyword">const</span> firebaseConfig = {
+    apiKey: <span class="string">"AIzaSy..."</span>,
+    authDomain: <span class="string">"tu-proyecto.firebaseapp.com"</span>,
+    projectId: <span class="string">"tu-proyecto"</span>,
+    storageBucket: <span class="string">"tu-proyecto.appspot.com"</span>,
+    messagingSenderId: <span class="string">"123456"</span>,
+    appId: <span class="string">"1:123456:web:abcdef"</span>
+  };
+
+  <span class="keyword">const</span> app = <span class="func">initializeApp</span>(firebaseConfig);
+  <span class="keyword">const</span> db  = <span class="func">getFirestore</span>(app);
+
+  <span class="comment">// ✅ GUARDAR mensaje del formulario de contacto</span>
+  <span class="keyword">async function</span> <span class="func">guardarMensaje</span>() {
+    <span class="keyword">const</span> nombre  = document.<span class="func">getElementById</span>(<span class="string">'nombre'</span>).value;
+    <span class="keyword">const</span> correo  = document.<span class="func">getElementById</span>(<span class="string">'correo'</span>).value;
+    <span class="keyword">const</span> mensaje = document.<span class="func">getElementById</span>(<span class="string">'mensaje'</span>).value;
+
+    <span class="keyword">await</span> <span class="func">addDoc</span>(<span class="func">collection</span>(db, <span class="string">"mensajes"</span>), {
+      nombre, correo, mensaje,
+      fecha: <span class="keyword">new</span> Date().<span class="func">toISOString</span>(),
+      leido: <span class="keyword">false</span>
+    });
+
+    <span class="func">alert</span>(<span class="string">'Mensaje guardado en la base de datos ✓'</span>);
+  }
+
+  <span class="comment">// ✅ LEER mensajes en el panel admin</span>
+  <span class="keyword">async function</span> <span class="func">cargarMensajes</span>() {
+    <span class="keyword">const</span> q = <span class="func">query</span>(<span class="func">collection</span>(db, <span class="string">"mensajes"</span>), <span class="func">orderBy</span>(<span class="string">"fecha"</span>, <span class="string">"desc"</span>));
+    <span class="keyword">const</span> snap = <span class="keyword">await</span> <span class="func">getDocs</span>(q);
+    snap.<span class="func">forEach</span>(doc => {
+      console.<span class="func">log</span>(doc.id, doc.<span class="func">data</span>());
+    });
+  }
+
+  <span class="comment">// ✅ GUARDAR reserva de hotel</span>
+  <span class="keyword">async function</span> <span class="func">guardarReserva</span>(datos) {
+    <span class="keyword">await</span> <span class="func">addDoc</span>(<span class="func">collection</span>(db, <span class="string">"reservas"</span>), {
+      ...datos,
+      estado: <span class="string">"pendiente"</span>,
+      createdAt: <span class="keyword">new</span> Date()
+    });
+  }
+
+  <span class="comment">// Exponer funciones globalmente</span>
+  window.<span class="func">guardarMensaje</span> = guardarMensaje;
+  window.<span class="func">cargarMensajes</span> = cargarMensajes;
+&lt;/script&gt;</pre>
+
+  <!-- ============================================================ -->
+  <h2>3. SUPABASE — CONFIGURACIÓN RÁPIDA</h2>
+
+  <pre><span class="comment">// 1. Crear cuenta en supabase.com y nuevo proyecto</span>
+<span class="comment">// 2. Ir a Settings → API → copiar URL y anon key</span>
+<span class="comment">// 3. Crear tabla en el SQL Editor:</span>
+
+CREATE TABLE mensajes (
+  id         BIGSERIAL PRIMARY KEY,
+  nombre     TEXT NOT NULL,
+  correo     TEXT NOT NULL,
+  mensaje    TEXT,
+  creado_en  TIMESTAMP DEFAULT NOW()
+);
+
+<span class="comment">// 4. En tu JS:</span>
+<span class="keyword">import</span> { createClient } <span class="keyword">from</span> <span class="string">'https://esm.sh/@supabase/supabase-js@2'</span>;
+
+<span class="keyword">const</span> supabase = <span class="func">createClient</span>(
+  <span class="string">'https://tu-proyecto.supabase.co'</span>,
+  <span class="string">'tu-anon-key-publica'</span>
+);
+
+<span class="comment">// Insertar</span>
+<span class="keyword">const</span> { error } = <span class="keyword">await</span> supabase
+  .<span class="func">from</span>(<span class="string">'mensajes'</span>)
+  .<span class="func">insert</span>({ nombre, correo, mensaje });
+
+<span class="comment">// Leer</span>
+<span class="keyword">const</span> { data } = <span class="keyword">await</span> supabase
+  .<span class="func">from</span>(<span class="string">'mensajes'</span>)
+  .<span class="func">select</span>(<span class="string">'*'</span>)
+  .<span class="func">order</span>(<span class="string">'creado_en'</span>, { ascending: <span class="keyword">false</span> });</pre>
+
+  <!-- ============================================================ -->
+  <h2>4. ESTRUCTURA RECOMENDADA EN FIRESTORE</h2>
+
+  <pre><span class="comment">// Colecciones sugeridas para Webflow CO.:</span>
+
+mensajes/               <span class="comment">← Formulario de contacto</span>
+  ├── {id}
+  │     nombre: "Juan"
+  │     correo: "juan@mail.com"
+  │     mensaje: "Quiero una cotización..."
+  │     fecha: "2026-04-01T..."
+  │     leido: false
+
+proyectos/              <span class="comment">← Panel admin</span>
+  ├── {id}
+  │     nombre: "Hotel La Posada"
+  │     cliente: "Juan Pérez"
+  │     plan: "empresarial"
+  │     estado: "en-desarrollo"
+  │     valor: 1000000
+
+clientes/               <span class="comment">← CRM básico</span>
+  ├── {id}
+  │     nombre: "Juan Pérez"
+  │     telefono: "+57 310..."
+  │     correo: "juan@..."
+  │     proyectos: ["id1", "id2"]
+
+reservas/               <span class="comment">← Demo hotel/restaurante</span>
+  ├── {id}
+  │     nombre: "María López"
+  │     fecha: "2026-04-15"
+  │     tipo: "Suite Junior"
+  │     estado: "confirmada"</pre>
+
+  <!-- ============================================================ -->
+  <h2>5. SEGURIDAD — REGLAS DE FIRESTORE</h2>
+
+  <pre><span class="comment">// firestore.rules — Reglas básicas de seguridad</span>
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    <span class="comment">// Solo escritura pública (formularios)</span>
+    match /mensajes/{doc} {
+      allow write: if true;
+      allow read: if request.auth != null;  <span class="comment">// Solo admins autenticados</span>
+    }
+
+    <span class="comment">// Proyectos solo para admins</span>
+    match /proyectos/{doc} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}</pre>
+
+  <h2>6. RESUMEN COMPARATIVO</h2>
+
+  <div class="db-card">
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:8px 12px;color:var(--g);font-size:10px;letter-spacing:2px;border-bottom:1px solid var(--border);">BASE DE DATOS</th>
+          <th style="padding:8px 12px;color:var(--g);font-size:10px;letter-spacing:2px;border-bottom:1px solid var(--border);">TIPO</th>
+          <th style="padding:8px 12px;color:var(--g);font-size:10px;letter-spacing:2px;border-bottom:1px solid var(--border);">BACKEND</th>
+          <th style="padding:8px 12px;color:var(--g);font-size:10px;letter-spacing:2px;border-bottom:1px solid var(--border);">GRATIS</th>
+          <th style="padding:8px 12px;color:var(--g);font-size:10px;letter-spacing:2px;border-bottom:1px solid var(--border);">DIFICULTAD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;">🔥 Firebase</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">NoSQL</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">No</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--green);text-align:center;">✓ Sí</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">Fácil</td></tr>
+        <tr><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;">🐘 Supabase</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">SQL</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">No</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--green);text-align:center;">✓ Sí</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">Medio</td></tr>
+        <tr><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;">🍃 MongoDB</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">NoSQL</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">Sí</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--green);text-align:center;">✓ Sí</td><td style="padding:8px 12px;border-bottom:1px solid #0f0f18;color:var(--g);text-align:center;">Avanzado</td></tr>
+        <tr><td style="padding:8px 12px;">🐬 MySQL</td><td style="padding:8px 12px;color:var(--g);text-align:center;">SQL</td><td style="padding:8px 12px;color:var(--g);text-align:center;">Sí</td><td style="padding:8px 12px;color:var(--g);text-align:center;">Limitado</td><td style="padding:8px 12px;color:var(--g);text-align:center;">Avanzado</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Guía creada por <a href="index.html" style="color:var(--accent);">Webflow CO.</a> · Colombia 🇨🇴 · 2026</p>
+  </footer>
+
+</body>
+</html>

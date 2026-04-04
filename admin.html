@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images.ico/webfloww.ico" type="image/x-icon">
+  <title>Admin 👑 Webflow CO</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--bg:#08080a;--side:#0e0e12;--card:#13131a;--border:#1f1f2e;--w:#fff;--g:#6b7280;--accent:#7c6aff;--green:#10b981;--red:#ef4444;--yellow:#f59e0b;}
+    body{background:var(--bg);color:var(--w);font-family:'Segoe UI',Arial,sans-serif;display:flex;min-height:100vh;}
+    .sidebar{width:240px;min-height:100vh;background:var(--side);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:50;}
+    .sb-logo{padding:28px 20px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+    .sb-logo-circle{width:34px;height:34px;border:1.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:14px;font-weight:700;}
+    .sb-logo-text{font-size:13px;font-weight:300;letter-spacing:4px;}
+    .sb-badge{font-size:9px;letter-spacing:2px;background:var(--accent);color:#fff;padding:2px 8px;border-radius:10px;margin-left:auto;}
+    .sb-nav{flex:1;padding:20px 12px;}
+    .sb-section{font-size:9px;letter-spacing:3px;color:#333;padding:4px 8px 10px;}
+    .sb-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--g);font-size:13px;letter-spacing:.5px;cursor:pointer;transition:all .2s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;}
+    .sb-link:hover,.sb-link.active{background:rgba(124,106,255,.12);color:#fff;}
+    .sb-link.active{color:var(--accent);}
+    .sb-link .icon{font-size:16px;width:20px;text-align:center;}
+    .sb-footer{padding:16px 20px;border-top:1px solid var(--border);}
+    .sb-user{display:flex;align-items:center;gap:10px;}
+    .sb-avatar{width:34px;height:34px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+    .sb-user-info small{color:var(--g);font-size:10px;letter-spacing:1px;}
+    .sb-user-name{font-size:13px;}
+    .main{margin-left:240px;flex:1;padding:32px;min-height:100vh;}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;}
+    .topbar h1{font-size:22px;font-weight:600;letter-spacing:-.5px;}
+    .topbar-right{display:flex;align-items:center;gap:12px;}
+    .topbar-btn{padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;letter-spacing:1px;cursor:pointer;transition:opacity .2s;}
+    .topbar-btn:hover{opacity:.85;}
+    .logout-btn{padding:8px 16px;background:transparent;color:var(--g);border:1px solid var(--border);border-radius:8px;font-size:12px;letter-spacing:1px;cursor:pointer;transition:all .2s;}
+    .logout-btn:hover{border-color:#888;color:#fff;}
+    .page{display:none;}
+    .page.active{display:block;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;}
+    .stat-card .label{font-size:11px;letter-spacing:2px;color:var(--g);margin-bottom:8px;}
+    .stat-card .value{font-size:28px;font-weight:700;font-family:Georgia,serif;}
+    .stat-card .delta{font-size:11px;margin-top:6px;}
+    .delta.up{color:var(--green);}
+    .delta.down{color:var(--red);}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+    .grid3{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px;}
+    .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+    .card-title{font-size:13px;letter-spacing:1px;color:var(--g);}
+    .card-action{font-size:11px;color:var(--accent);cursor:pointer;letter-spacing:1px;background:none;border:none;}
+    .card-action:hover{text-decoration:underline;}
+    table{width:100%;border-collapse:collapse;}
+    th{font-size:10px;letter-spacing:2px;color:var(--g);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);}
+    td{font-size:13px;padding:10px 12px;border-bottom:1px solid #0f0f18;color:#ccc;vertical-align:middle;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(124,106,255,.04);}
+    .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:1px;}
+    .badge-green{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.2);}
+    .badge-yellow{background:rgba(245,158,11,.12);color:var(--yellow);border:1px solid rgba(245,158,11,.2);}
+    .badge-red{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.2);}
+    .badge-purple{background:rgba(124,106,255,.12);color:var(--accent);border:1px solid rgba(124,106,255,.2);}
+    .btn-del{background:transparent;border:1px solid var(--red);color:var(--red);padding:4px 12px;border-radius:6px;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+    .btn-del:hover{background:var(--red);color:#fff;}
+    .bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:10px;}
+    .bar{flex:1;background:rgba(124,106,255,.15);border-radius:4px 4px 0 0;border:1px solid rgba(124,106,255,.3);transition:background .3s;}
+    .bar:hover{background:rgba(124,106,255,.35);}
+    .bar-label{text-align:center;font-size:9px;color:var(--g);margin-top:6px;letter-spacing:1px;}
+    .activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+    .activity-item:last-child{border-bottom:none;}
+    .act-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0;}
+    .act-dot.green{background:var(--green);}
+    .act-dot.yellow{background:var(--yellow);}
+    .act-text{font-size:13px;}
+    .act-time{font-size:11px;color:var(--g);margin-top:2px;}
+    .progress-bar-wrap{background:#1a1a2e;border-radius:4px;height:6px;overflow:hidden;margin-top:6px;}
+    .progress-bar{height:100%;border-radius:4px;background:var(--accent);transition:width .5s;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .field{margin-bottom:14px;}
+    .field label{display:block;font-size:10px;letter-spacing:2px;color:var(--g);margin-bottom:6px;}
+    .field input,.field textarea,.field select{width:100%;background:#0a0a10;border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:#fff;font-size:14px;outline:none;transition:border .2s;font-family:inherit;}
+    .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);}
+    .field textarea{min-height:90px;resize:vertical;}
+    .field select option{background:#111;}
+    .btn-save{padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;letter-spacing:2px;cursor:pointer;transition:opacity .2s;}
+    .btn-save:hover{opacity:.85;}
+    .btn-danger{padding:10px 24px;background:transparent;color:var(--red);border:1px solid var(--red);border-radius:8px;font-size:12px;letter-spacing:2px;cursor:pointer;}
+    .msg-item{padding:14px 16px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;transition:border .2s;}
+    .msg-item:hover{border-color:#444;}
+    .msg-item.unread{border-left:3px solid var(--accent);}
+    .msg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+    .msg-from{font-size:14px;font-weight:600;}
+    .msg-time{font-size:11px;color:var(--g);}
+    .msg-preview{font-size:13px;color:var(--g);margin-bottom:8px;}
+    .msg-full{font-size:13px;color:#bbb;line-height:1.8;display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+    .msg-actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+    .msg-link-btn{background:none;border:none;color:var(--accent);font-size:11px;letter-spacing:1px;cursor:pointer;padding:0;}
+    .msg-link-btn:hover{text-decoration:underline;}
+    .empty-state{text-align:center;padding:48px 20px;color:#333;font-size:13px;letter-spacing:1px;}
+    @media(max-width:900px){
+      .sidebar{width:60px;}
+      .sb-logo-text,.sb-badge,.sb-section,.sb-user-info,.sb-link span:not(.icon){display:none;}
+      .sb-logo{padding:20px 12px;}
+      .main{margin-left:60px;padding:20px;}
+      .stats-row{grid-template-columns:repeat(2,1fr);}
+      .grid2,.grid3{grid-template-columns:1fr;}
+      .form-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-circle">W</div>
+      <div class="sb-logo-text">WEBFLOW</div>
+      <div class="sb-badge">ADMIN</div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">PRINCIPAL</div>
+      <button class="sb-link active" onclick="showPage('dashboard',this)"><span class="icon">📊</span><span>Dashboard</span></button>
+      <button class="sb-link" onclick="showPage('proyectos',this)"><span class="icon">🗂️</span><span>Proyectos</span></button>
+      <button class="sb-link" onclick="showPage('clientes',this)"><span class="icon">👥</span><span>Clientes</span></button>
+      <button class="sb-link" id="sb-mensajes" onclick="showPage('mensajes',this)">
+        <span class="icon">✉️</span>
+        <span>Mensajes <span id="msgBadge" style="background:var(--accent);color:#fff;border-radius:10px;font-size:9px;padding:1px 6px;margin-left:4px;display:none;"></span></span>
+      </button>
+      <div class="sb-section" style="margin-top:16px;">CONFIGURACIÓN</div>
+      <button class="sb-link" onclick="showPage('nuevo-proyecto',this)"><span class="icon">➕</span><span>Nuevo proyecto</span></button>
+      <button class="sb-link" onclick="showPage('ajustes',this)"><span class="icon">⚙️</span><span>Ajustes</span></button>
+      <button class="sb-link" onclick="showPage('base-datos',this)"><span class="icon">🗃️</span><span>Base de datos</span></button>
+    </nav>
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="sb-avatar">A</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name">Admin</div>
+          <small>WEBFLOW CO.</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="topbar-right">
+        <button class="topbar-btn" onclick="showPage('nuevo-proyecto',null)">+ Nuevo proyecto</button>
+        <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-row">
+        <div class="stat-card"><div class="label">PROYECTOS</div><div class="value" id="dash-nproyectos">0</div><div class="delta up">Total registrados</div></div>
+        <div class="stat-card"><div class="label">CLIENTES</div><div class="value">23</div><div class="delta up">↑ 3 este mes</div></div>
+        <div class="stat-card"><div class="label">INGRESOS MES</div><div class="value">$4.2M</div><div class="delta up">↑ 18%</div></div>
+        <div class="stat-card"><div class="label">MENSAJES NUEVOS</div><div class="value" id="dash-nmensajes">0</div><div class="delta down">Sin responder</div></div>
+      </div>
+      <div class="grid3">
+        <div class="card">
+          <div class="card-header"><span class="card-title">INGRESOS — 2026</span></div>
+          <div class="bar-chart">
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;"><div class="bar" style="height:40%;"></div><div class="bar-label">ENE</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;"><div class="bar" style="height:60%;"></div><div class="bar-label">FEB</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;"><div class="bar" style="height:45%;"></div><div class="bar-label">MAR</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;"><div class="bar" style="height:80%;"></div><div class="bar-label">ABR</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;"><div class="bar" style="height:70%;"></div><div class="bar-label">MAY</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;"><div class="bar" style="height:90%;background:rgba(124,106,255,.35);border-color:rgba(124,106,255,.6);"></div><div class="bar-label">JUN</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">ACTIVIDAD</span></div>
+          <div id="dash-actividad">
+            <div class="activity-item"><div class="act-dot green"></div><div><div class="act-text">Panel listo</div><div class="act-time">Ahora</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">PROYECTOS RECIENTES</span>
+          <button class="card-action" onclick="showPage('proyectos',null)">Ver todos →</button>
+        </div>
+        <table>
+          <thead><tr><th>PROYECTO</th><th>CLIENTE</th><th>PLAN</th><th>ESTADO</th><th>PROGRESO</th></tr></thead>
+          <tbody id="dash-tabla"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROYECTOS -->
+    <div class="page" id="page-proyectos">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">TODOS LOS PROYECTOS</span>
+          <button class="card-action" onclick="showPage('nuevo-proyecto',null)">+ Nuevo</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>PROYECTO</th><th>CLIENTE</th><th>PLAN</th><th>VALOR</th><th>ESTADO</th><th>ENTREGA</th><th>ACCIÓN</th></tr>
+          </thead>
+          <tbody id="tabla-proyectos"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div class="page" id="page-clientes">
+      <div class="card">
+        <div class="card-header"><span class="card-title">CLIENTES REGISTRADOS</span></div>
+        <table>
+          <thead><tr><th>NOMBRE</th><th>EMPRESA</th><th>TELÉFONO</th><th>CORREO</th><th>ESTADO</th></tr></thead>
+          <tbody>
+            <tr><td>Juan Pérez</td><td>Hotel La Posada</td><td>+57 310 111 2233</td><td>jperez@posada.com</td><td><span class="badge badge-green">Activo</span></td></tr>
+            <tr><td>Ana Gómez</td><td>El Sabor Resto</td><td>+57 311 444 5566</td><td>ana@elsabor.co</td><td><span class="badge badge-green">Activo</span></td></tr>
+            <tr><td>Dr. Carlos M.</td><td>Clínica Sonrisa</td><td>+57 312 777 8899</td><td>drm@clinica.co</td><td><span class="badge badge-yellow">En proceso</span></td></tr>
+            <tr><td>Sofía Castro</td><td>Moda Elegante</td><td>+57 300 222 3344</td><td>sofia@moda.co</td><td><span class="badge badge-yellow">En proceso</span></td></tr>
+            <tr><td>Lic. Ramírez</td><td>R&A Abogados</td><td>+57 315 555 6677</td><td>lic@rabogados.co</td><td><span class="badge badge-red">Pendiente</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MENSAJES -->
+    <div class="page" id="page-mensajes">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">MENSAJES DEL FORMULARIO</span>
+          <button class="card-action" style="color:var(--red);" onclick="borrarTodos()">Borrar todos</button>
+        </div>
+        <div id="lista-mensajes"></div>
+      </div>
+    </div>
+
+    <!-- NUEVO PROYECTO -->
+    <div class="page" id="page-nuevo-proyecto">
+      <div class="card">
+        <div class="card-header"><span class="card-title">CREAR NUEVO PROYECTO</span></div>
+        <div class="form-grid">
+          <div class="field"><label>NOMBRE DEL PROYECTO *</label><input type="text" id="np-nombre" placeholder="Ej: Hotel Vista Mar"/></div>
+          <div class="field"><label>CLIENTE *</label><input type="text" id="np-cliente" placeholder="Nombre del cliente"/></div>
+          <div class="field"><label>CORREO</label><input type="email" id="np-correo" placeholder="cliente@correo.com"/></div>
+          <div class="field"><label>TELÉFONO</label><input type="tel" id="np-telefono" placeholder="+57 300 000 0000"/></div>
+          <div class="field">
+            <label>PLAN</label>
+            <select id="np-plan">
+              <option value="Básico">Básico — $250K</option>
+              <option value="Profesional">Profesional — $500K</option>
+              <option value="Empresarial">Empresarial — $1.0M</option>
+              <option value="Personalizado">Personalizado</option>
+            </select>
+          </div>
+          <div class="field"><label>VALOR</label><input type="text" id="np-valor" placeholder="Ej: $500K"/></div>
+          <div class="field">
+            <label>ESTADO</label>
+            <select id="np-estado">
+              <option value="Pendiente">Pendiente</option>
+              <option value="En desarrollo">En desarrollo</option>
+              <option value="En revisión">En revisión</option>
+              <option value="Entregado">Entregado</option>
+            </select>
+          </div>
+          <div class="field"><label>FECHA ESTIMADA</label><input type="text" id="np-fecha" placeholder="Ej: May 2026"/></div>
+        </div>
+        <div class="field"><label>DESCRIPCIÓN / NOTAS</label><textarea id="np-desc" placeholder="Requerimientos, notas importantes del cliente..."></textarea></div>
+        <div style="display:flex;gap:12px;margin-top:8px;">
+          <button class="btn-save" onclick="agregarProyecto()">GUARDAR PROYECTO</button>
+          <button class="btn-danger" onclick="showPage('proyectos',null)">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AJUSTES -->
+    <div class="page" id="page-ajustes">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header"><span class="card-title">DATOS DE LA AGENCIA</span></div>
+          <div class="field"><label>NOMBRE</label><input type="text" value="Webflow CO."/></div>
+          <div class="field"><label>CORREO</label><input type="email" value="webflow.oficial@gmail.com"/></div>
+          <div class="field"><label>TELÉFONO</label><input type="tel" value="+57 301 667 5660"/></div>
+          <div class="field"><label>CIUDAD</label><input type="text" value="Bucaramanga, Colombia"/></div>
+          <button class="btn-save" onclick="alert('Guardado ✓')">GUARDAR</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">SEGURIDAD</span></div>
+          <div class="field"><label>CONTRASEÑA ACTUAL</label><input type="password" placeholder="••••••••"/></div>
+          <div class="field"><label>NUEVA CONTRASEÑA</label><input type="password" placeholder="••••••••"/></div>
+          <div class="field"><label>CONFIRMAR</label><input type="password" placeholder="••••••••"/></div>
+          <button class="btn-save" onclick="alert('Actualizado ✓')">CAMBIAR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BASE DE DATOS -->
+    <div class="page" id="page-base-datos">
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-header"><span class="card-title">OPCIONES DE BASE DE DATOS</span></div>
+        <p style="color:var(--g);font-size:14px;line-height:1.8;margin-bottom:20px;">Elige cómo conectar tu agencia a una base de datos real.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+          <div style="background:#0a0a12;border:1px solid var(--border);border-radius:10px;padding:18px;"><div style="font-size:22px;margin-bottom:8px;">🔥</div><b>Firebase</b><p style="font-size:12px;color:var(--g);margin-top:6px;">NoSQL Google. Gratis hasta cierto límite.</p><span class="badge badge-green" style="margin-top:10px;display:inline-block;">Recomendado</span></div>
+          <div style="background:#0a0a12;border:1px solid var(--border);border-radius:10px;padding:18px;"><div style="font-size:22px;margin-bottom:8px;">🐘</div><b>Supabase</b><p style="font-size:12px;color:var(--g);margin-top:6px;">PostgreSQL con API REST automática.</p><span class="badge badge-yellow" style="margin-top:10px;display:inline-block;">Popular</span></div>
+          <div style="background:#0a0a12;border:1px solid var(--border);border-radius:10px;padding:18px;"><div style="font-size:22px;margin-bottom:8px;">🍃</div><b>MongoDB</b><p style="font-size:12px;color:var(--g);margin-top:6px;">NoSQL flexible para proyectos complejos.</p><span class="badge badge-purple" style="margin-top:10px;display:inline-block;">Avanzado</span></div>
+          <div style="background:#0a0a12;border:1px solid var(--border);border-radius:10px;padding:18px;"><div style="font-size:22px;margin-bottom:8px;">🐬</div><b>MySQL</b><p style="font-size:12px;color:var(--g);margin-top:6px;">Relacional clásico para proyectos estructurados.</p><span class="badge badge-green" style="margin-top:10px;display:inline-block;">Estable</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">GUÍA COMPLETA</span></div>
+        <p style="color:var(--g);font-size:14px;margin-bottom:16px;">Instrucciones paso a paso y código de ejemplo.</p>
+        <a href="db-guide.html" target="_blank" class="btn-save" style="text-decoration:none;display:inline-block;">Ver db-guide.html →</a>
+      </div>
+    </div>
+
+  </main>
+
+<script>
+// ============================================================
+// CLAVES localStorage — compartidas con index.html
+// ============================================================
+const K_MSG  = 'wf_mensajes';
+const K_PROY = 'wf_proyectos';
+
+// ============================================================
+// NAVEGACIÓN
+// ============================================================
+const TITLES = {dashboard:'Dashboard',proyectos:'Proyectos',clientes:'Clientes',mensajes:'Mensajes','nuevo-proyecto':'Nuevo Proyecto',ajustes:'Ajustes','base-datos':'Base de Datos'};
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-link').forEach(b => b.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  if (btn) btn.classList.add('active');
+  document.getElementById('pageTitle').textContent = TITLES[id] || id;
+  if (id === 'proyectos')      renderProyectos();
+  if (id === 'mensajes')       renderMensajes();
+  if (id === 'dashboard')      renderDashboard();
+  if (id === 'nuevo-proyecto') limpiarFormProyecto();
+}
+
+function doLogout() {
+  sessionStorage.removeItem('wf_admin');
+  window.location.href = 'index.html';
+}
+
+// ============================================================
+// PROYECTOS
+// ============================================================
+const PLAN_BADGE   = {Básico:'badge-green',Profesional:'badge-yellow',Empresarial:'badge-purple',Personalizado:'badge-purple'};
+const ESTADO_BADGE = {Entregado:'badge-green','En revisión':'badge-yellow','En desarrollo':'badge-red',Pendiente:'badge-red',Consultando:'badge-red'};
+const ESTADO_PCT   = {Entregado:100,'En revisión':70,'En desarrollo':40,Pendiente:10,Consultando:20};
+const ESTADO_COLOR = {Entregado:'var(--green)','En revisión':'var(--yellow)','En desarrollo':'var(--accent)',Pendiente:'var(--red)',Consultando:'var(--red)'};
+
+function getProy()       { try { return JSON.parse(localStorage.getItem(K_PROY)) || []; } catch(e) { return []; } }
+function saveProy(arr)   { localStorage.setItem(K_PROY, JSON.stringify(arr)); }
+
+function limpiarFormProyecto() {
+  ['np-nombre','np-cliente','np-correo','np-telefono','np-valor','np-fecha','np-desc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const pl = document.getElementById('np-plan');
+  const es = document.getElementById('np-estado');
+  if (pl) pl.selectedIndex = 0;
+  if (es) es.selectedIndex = 0;
+}
+
+function agregarProyecto() {
+  const nombre  = document.getElementById('np-nombre').value.trim();
+  const cliente = document.getElementById('np-cliente').value.trim();
+  if (!nombre || !cliente) { alert('Completa al menos el Nombre del proyecto y el Cliente.'); return; }
+
+  const p = {
+    id:       Date.now(),
+    nombre,
+    cliente,
+    correo:   document.getElementById('np-correo').value.trim(),
+    telefono: document.getElementById('np-telefono').value.trim(),
+    plan:     document.getElementById('np-plan').value,
+    valor:    document.getElementById('np-valor').value.trim() || '—',
+    estado:   document.getElementById('np-estado').value,
+    fecha:    document.getElementById('np-fecha').value.trim() || '—',
+    desc:     document.getElementById('np-desc').value.trim(),
+    creado:   new Date().toLocaleString('es-CO')
+  };
+
+  const arr = getProy();
+  arr.unshift(p);
+  saveProy(arr);
+
+  alert('Proyecto "' + nombre + '" guardado correctamente ✓');
+  showPage('proyectos', null);
+}
+
+function eliminarProyecto(id) {
+  if (!confirm('¿Eliminar este proyecto? Esta acción no se puede deshacer.')) return;
+  saveProy(getProy().filter(p => p.id !== id));
+  renderProyectos();
+  renderDashboard();
+}
+
+function renderProyectos() {
+  const arr   = getProy();
+  const tbody = document.getElementById('tabla-proyectos');
+  if (!tbody) return;
+
+  if (arr.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No hay proyectos registrados aún. <a href="#" onclick="showPage('nuevo-proyecto',null);return false;" style="color:var(--accent);">Agregar uno →</a></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = arr.map(p => `
+    <tr>
+      <td><strong style="color:#eee;">${p.nombre}</strong>${p.desc ? `<br><small style="color:#555;">${p.desc.substring(0,50)}${p.desc.length>50?'...':''}</small>` : ''}</td>
+      <td>${p.cliente}${p.correo ? `<br><small style="color:#555;">${p.correo}</small>` : ''}</td>
+      <td><span class="badge ${PLAN_BADGE[p.plan]||'badge-purple'}">${p.plan}</span></td>
+      <td>${p.valor}</td>
+      <td><span class="badge ${ESTADO_BADGE[p.estado]||'badge-red'}">${p.estado}</span></td>
+      <td>${p.fecha}</td>
+      <td><button class="btn-del" onclick="eliminarProyecto(${p.id})">Eliminar</button></td>
+    </tr>
+  `).join('');
+}
+
+// ============================================================
+// MENSAJES — conectados con index.html via localStorage
+// ============================================================
+function getMsg()      { try { return JSON.parse(localStorage.getItem(K_MSG)) || []; } catch(e) { return []; } }
+function saveMsg(arr)  { localStorage.setItem(K_MSG, JSON.stringify(arr)); actualizarBadge(); }
+
+function actualizarBadge() {
+  const noLeidos = getMsg().filter(m => !m.leido).length;
+  const badge    = document.getElementById('msgBadge');
+  const dashN    = document.getElementById('dash-nmensajes');
+  if (badge)  { badge.textContent = noLeidos; badge.style.display = noLeidos > 0 ? 'inline' : 'none'; }
+  if (dashN)  dashN.textContent = noLeidos;
+}
+
+function eliminarMensaje(id) {
+  if (!confirm('¿Eliminar este mensaje?')) return;
+  saveMsg(getMsg().filter(m => m.id !== id));
+  renderMensajes();
+  renderDashboard();
+}
+
+function borrarTodos() {
+  if (getMsg().length === 0) { alert('No hay mensajes para borrar.'); return; }
+  if (!confirm('¿Borrar TODOS los mensajes? Esta acción no se puede deshacer.')) return;
+  saveMsg([]);
+  renderMensajes();
+  renderDashboard();
+}
+
+function marcarLeido(id) {
+  saveMsg(getMsg().map(m => m.id === id ? {...m, leido: true} : m));
+  actualizarBadge();
+}
+
+function toggleDetalle(id) {
+  const el = document.getElementById('det-' + id);
+  if (!el) return;
+  const abierto = el.style.display === 'block';
+  el.style.display = abierto ? 'none' : 'block';
+  const btn = document.getElementById('togbtn-' + id);
+  if (btn) btn.textContent = abierto ? 'Ver mensaje completo' : 'Ocultar';
+  if (!abierto) marcarLeido(id);
+}
+
+function tiempoRelativo(ts) {
+  const d = Date.now() - ts;
+  const m = Math.floor(d/60000), h = Math.floor(d/3600000), dias = Math.floor(d/86400000);
+  if (m < 1)  return 'Ahora mismo';
+  if (m < 60) return `Hace ${m} min`;
+  if (h < 24) return `Hace ${h}h`;
+  return `Hace ${dias} día${dias>1?'s':''}`;
+}
+
+function renderMensajes() {
+  const arr  = getMsg();
+  const cont = document.getElementById('lista-mensajes');
+  if (!cont) return;
+
+  if (arr.length === 0) {
+    cont.innerHTML = '<div class="empty-state">No hay mensajes aún.<br>Los mensajes enviados desde el formulario de contacto del sitio aparecerán aquí automáticamente.</div>';
+    return;
+  }
+
+  cont.innerHTML = arr.map(m => `
+    <div class="msg-item ${m.leido ? '' : 'unread'}">
+      <div class="msg-header">
+        <span class="msg-from">
+          ${m.nombre}
+          ${!m.leido ? '<span class="badge badge-purple" style="margin-left:8px;font-size:9px;">NUEVO</span>' : ''}
+        </span>
+        <span class="msg-time">${tiempoRelativo(m.ts)}</span>
+      </div>
+      <div class="msg-preview">${(m.mensaje||'(sin mensaje)').substring(0,100)}${m.mensaje&&m.mensaje.length>100?'...':''}</div>
+      <div class="msg-full" id="det-${m.id}">
+        <table style="border:none;margin:0;">
+          <tr><td style="color:var(--g);font-size:11px;letter-spacing:1px;padding:4px 12px 4px 0;border:none;width:80px;">CORREO</td><td style="border:none;padding:4px 0;">${m.correo||'—'}</td></tr>
+          <tr><td style="color:var(--g);font-size:11px;letter-spacing:1px;padding:4px 12px 4px 0;border:none;">TELÉFONO</td><td style="border:none;padding:4px 0;">${m.telefono||'—'}</td></tr>
+          <tr><td style="color:var(--g);font-size:11px;letter-spacing:1px;padding:4px 12px 4px 0;border:none;">PROYECTO</td><td style="border:none;padding:4px 0;">${m.tipo||'—'}</td></tr>
+          <tr><td style="color:var(--g);font-size:11px;letter-spacing:1px;padding:4px 12px 4px 0;border:none;vertical-align:top;">MENSAJE</td><td style="border:none;padding:4px 0;line-height:1.7;">${m.mensaje||'—'}</td></tr>
+        </table>
+      </div>
+      <div class="msg-actions">
+        <button id="togbtn-${m.id}" class="msg-link-btn" onclick="toggleDetalle(${m.id})">Ver mensaje completo</button>
+        <span style="color:#333;">·</span>
+        <button class="btn-del" style="padding:3px 10px;font-size:10px;" onclick="eliminarMensaje(${m.id})">Eliminar</button>
+        ${m.correo ? `<span style="color:#333;">·</span><a href="mailto:${m.correo}?subject=Re: Cotización Webflow CO." style="color:var(--accent);font-size:11px;letter-spacing:1px;text-decoration:none;">Responder →</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard() {
+  const proy  = getProy();
+  const msgs  = getMsg();
+  const noL   = msgs.filter(m => !m.leido).length;
+
+  const np = document.getElementById('dash-nproyectos');
+  const nm = document.getElementById('dash-nmensajes');
+  if (np) np.textContent = proy.length;
+  if (nm) nm.textContent = noL;
+
+  const tbody = document.getElementById('dash-tabla');
+  if (tbody) {
+    if (proy.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Sin proyectos. <a href="#" onclick="showPage('nuevo-proyecto',null);return false;" style="color:var(--accent);">Crear uno →</a></td></tr>`;
+    } else {
+      tbody.innerHTML = proy.slice(0,4).map(p => `
+        <tr>
+          <td>${p.nombre}</td>
+          <td>${p.cliente}</td>
+          <td><span class="badge ${PLAN_BADGE[p.plan]||'badge-purple'}">${p.plan}</span></td>
+          <td><span class="badge ${ESTADO_BADGE[p.estado]||'badge-red'}">${p.estado}</span></td>
+          <td><div class="progress-bar-wrap"><div class="progress-bar" style="width:${ESTADO_PCT[p.estado]||10}%;background:${ESTADO_COLOR[p.estado]||'var(--accent)'};"></div></div></td>
+        </tr>
+      `).join('');
+    }
+  }
+  actualizarBadge();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  renderDashboard();
+  actualizarBadge();
+});
+
+// Escuchar mensajes nuevos desde index.html (otra pestaña)
+window.addEventListener('storage', e => {
+  if (e.key === K_MSG)  { renderMensajes(); renderDashboard(); }
+  if (e.key === K_PROY) { renderProyectos(); renderDashboard(); }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel La Posada Central — Demo</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--gold:#c9a96e;--dark:#0c0a06;--card:#141209;}
+    body{background:var(--dark);color:#f5f0e8;font-family:'Georgia',serif;overflow-x:hidden;}
+
+    /* DEMO BADGE */
+    .demo-badge{
+      position:fixed;top:12px;right:12px;z-index:999;
+      background:#7c6aff;color:#fff;font-family:'Segoe UI',sans-serif;
+      font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:20px;
+    }
+    .back-btn{
+      position:fixed;top:12px;left:12px;z-index:999;
+      background:rgba(0,0,0,.7);color:#fff;font-family:'Segoe UI',sans-serif;
+      font-size:11px;letter-spacing:2px;padding:8px 16px;border-radius:8px;
+      text-decoration:none;border:1px solid #333;transition:all .3s;
+    }
+    .back-btn:hover{background:#fff;color:#000;}
+
+    /* NAV */
+    nav{
+      position:fixed;top:0;width:100%;z-index:100;
+      background:rgba(12,10,6,.9);border-bottom:1px solid #2a2218;
+      padding:16px 5%;display:flex;align-items:center;justify-content:space-between;
+    }
+    .logo{font-size:18px;letter-spacing:4px;color:var(--gold);}
+    .nav-links{display:flex;gap:24px;list-style:none;}
+    .nav-links a{color:#a89060;font-size:12px;letter-spacing:2px;text-decoration:none;font-family:'Segoe UI',sans-serif;}
+    .nav-links a:hover{color:var(--gold);}
+    .nav-cta{padding:8px 20px;background:var(--gold);color:#0c0a06;font-size:11px;letter-spacing:2px;border:none;cursor:pointer;font-family:'Segoe UI',sans-serif;}
+
+    /* HERO */
+    .hero{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:100px 5% 60px;
+      background:radial-gradient(ellipse at center,#1a140a 0%,var(--dark) 70%);
+    }
+    .hero-badge{
+      font-family:'Segoe UI',sans-serif;font-size:10px;letter-spacing:4px;
+      color:var(--gold);border:1px solid #3a2e18;padding:6px 16px;border-radius:20px;
+      display:inline-block;margin-bottom:24px;
+    }
+    .hero h1{font-size:clamp(36px,6vw,72px);font-weight:400;line-height:1.15;margin-bottom:20px;letter-spacing:2px;}
+    .hero h1 span{color:var(--gold);}
+    .hero p{font-size:16px;color:#7a6a4a;line-height:1.9;margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto;font-family:'Segoe UI',sans-serif;}
+    .btn-gold{padding:14px 36px;background:var(--gold);color:#0c0a06;font-size:12px;letter-spacing:3px;border:none;cursor:pointer;font-family:'Segoe UI',sans-serif;transition:all .3s;}
+    .btn-gold:hover{background:#e0bb82;}
+    .btn-outline-gold{padding:14px 36px;background:transparent;color:var(--gold);font-size:12px;letter-spacing:3px;border:1px solid #3a2e18;cursor:pointer;font-family:'Segoe UI',sans-serif;margin-left:12px;}
+
+    /* STATS */
+    .stats{display:flex;gap:48px;justify-content:center;margin-top:60px;flex-wrap:wrap;}
+    .stat{text-align:center;}
+    .stat-num{font-size:28px;color:var(--gold);}
+    .stat-label{font-size:10px;letter-spacing:3px;color:#5a4a2a;font-family:'Segoe UI',sans-serif;margin-top:4px;}
+
+    /* SECTIONS */
+    section{padding:90px 5%;}
+    .inner{max-width:1100px;margin:0 auto;}
+    .sec-label{font-family:'Segoe UI',sans-serif;font-size:10px;letter-spacing:4px;color:var(--gold);margin-bottom:12px;}
+    .sec-title{font-size:clamp(26px,4vw,42px);font-weight:400;margin-bottom:16px;line-height:1.2;}
+    .sec-sub{color:#7a6a4a;font-size:15px;line-height:1.9;font-family:'Segoe UI',sans-serif;max-width:520px;}
+
+    /* HABITACIONES */
+    .rooms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:48px;}
+    .room-card{background:var(--card);border:1px solid #2a2218;border-radius:4px;overflow:hidden;transition:all .3s;}
+    .room-card:hover{border-color:#5a4a28;transform:translateY(-4px);}
+    .room-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:36px;}
+    .room-img.r1{background:linear-gradient(135deg,#1a140a,#2a1e0a);}
+    .room-img.r2{background:linear-gradient(135deg,#0a1018,#0f1a28);}
+    .room-img.r3{background:linear-gradient(135deg,#180a0a,#280f0f);}
+    .room-body{padding:20px;}
+    .room-body h3{font-size:16px;letter-spacing:1px;margin-bottom:6px;}
+    .room-body p{font-size:13px;color:#7a6a4a;line-height:1.7;font-family:'Segoe UI',sans-serif;}
+    .room-price{color:var(--gold);font-size:18px;margin-top:12px;}
+    .room-price span{font-size:11px;font-family:'Segoe UI',sans-serif;color:#7a6a4a;}
+
+    /* RESERVAS */
+    .reserva-form{
+      background:var(--card);border:1px solid #2a2218;padding:36px;
+      max-width:600px;margin:48px auto 0;
+    }
+    .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .rfield{margin-bottom:14px;}
+    .rfield label{display:block;font-family:'Segoe UI',sans-serif;font-size:10px;letter-spacing:2px;color:#5a4a2a;margin-bottom:6px;}
+    .rfield input,.rfield select{width:100%;background:#0a0806;border:1px solid #2a2218;padding:10px 14px;color:#f5f0e8;font-size:14px;outline:none;font-family:'Segoe UI',sans-serif;}
+    .rfield input:focus,.rfield select:focus{border-color:var(--gold);}
+    .rfield select option{background:#111;}
+
+    /* GALERÍA */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:48px;}
+    .gal-item{
+      aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+      font-size:32px;border:1px solid #2a2218;background:var(--card);
+      transition:all .3s;cursor:pointer;
+    }
+    .gal-item:hover{border-color:var(--gold);transform:scale(1.02);}
+    .gal-item:first-child{grid-column:span 2;aspect-ratio:2/1;}
+
+    /* ADMIN PANEL (colapsado) */
+    .admin-panel{
+      position:fixed;bottom:20px;right:20px;z-index:500;
+    }
+    .admin-toggle{
+      background:var(--gold);color:#0c0a06;border:none;padding:10px 18px;
+      font-size:11px;letter-spacing:2px;cursor:pointer;font-family:'Segoe UI',sans-serif;
+      border-radius:4px 4px 0 0;
+    }
+    .admin-body{
+      display:none;background:#0f0d08;border:1px solid var(--gold);
+      padding:20px;width:280px;
+    }
+    .admin-body.open{display:block;}
+    .admin-body h4{font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;}
+    .admin-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #2a2218;font-size:13px;color:#a89060;font-family:'Segoe UI',sans-serif;}
+    .admin-stat span{color:#f5f0e8;}
+
+    footer{padding:40px 5%;background:#080603;border-top:1px solid #1a1208;text-align:center;}
+    footer p{color:#5a4a2a;font-size:12px;letter-spacing:2px;font-family:'Segoe UI',sans-serif;}
+  </style>
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Volver</a>
+  <div class="demo-badge">DEMO — Webflow CO.</div>
+
+  <!-- ADMIN PANEL flotante -->
+  <div class="admin-panel">
+    <button class="admin-toggle" onclick="toggleAdmin()">⚙ ADMIN</button>
+    <div class="admin-body" id="adminBody">
+      <h4>PANEL ADMINISTRADOR</h4>
+      <div class="admin-stat">Habitaciones disponibles <span>12 / 20</span></div>
+      <div class="admin-stat">Reservas este mes <span>34</span></div>
+      <div class="admin-stat">Ingresos estimados <span>$8.2M</span></div>
+      <div class="admin-stat">Calificación promedio <span>⭐ 4.8</span></div>
+      <button onclick="alert('Panel completo disponible en la versión real.')" style="margin-top:14px;width:100%;background:var(--gold);color:#0c0a06;border:none;padding:8px;font-size:11px;letter-spacing:2px;cursor:pointer;font-family:'Segoe UI',sans-serif;">VER PANEL COMPLETO</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">POSADA CENTRAL</div>
+    <ul class="nav-links">
+      <li><a href="#habitaciones">Habitaciones</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#reservas">Reservas</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('reservas').scrollIntoView({behavior:'smooth'})">Reservar</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div>
+      <div class="hero-badge">PIEDECUESTA · SANTANDER · COLOMBIA</div>
+      <h1>Bienvenido a un<br><span>descanso extraordinario</span></h1>
+      <p>Una experiencia de hospedaje única en el corazón de Santander. Confort, elegancia y tradición en cada detalle.</p>
+      <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:12px;">
+        <button class="btn-gold" onclick="document.getElementById('reservas').scrollIntoView({behavior:'smooth'})">RESERVAR AHORA</button>
+        <button class="btn-outline-gold" onclick="document.getElementById('habitaciones').scrollIntoView({behavior:'smooth'})">Ver habitaciones</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-num">20</div><div class="stat-label">Habitaciones</div></div>
+        <div class="stat"><div class="stat-num">⭐4.8</div><div class="stat-label">Calificación</div></div>
+        <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Huéspedes</div></div>
+        <div class="stat"><div class="stat-num">10</div><div class="stat-label">Años de exp.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HABITACIONES -->
+  <section id="habitaciones">
+    <div class="inner">
+      <div class="sec-label">HABITACIONES</div>
+      <h2 class="sec-title">Espacios diseñados<br>para tu descanso</h2>
+      <div class="rooms-grid">
+        <div class="room-card">
+          <div class="room-img r1">🛏️</div>
+          <div class="room-body">
+            <h3>Habitación Estándar</h3>
+            <p>Cómoda y equipada con TV, baño privado, WiFi y vista al jardín.</p>
+            <div class="room-price">$120K <span>COP / noche</span></div>
+          </div>
+        </div>
+        <div class="room-card">
+          <div class="room-img r2">🌙</div>
+          <div class="room-body">
+            <h3>Suite Junior</h3>
+            <p>Espacio amplio con sala de estar, minibar y vista panorámica.</p>
+            <div class="room-price">$220K <span>COP / noche</span></div>
+          </div>
+        </div>
+        <div class="room-card">
+          <div class="room-img r3">👑</div>
+          <div class="room-body">
+            <h3>Suite Presidencial</h3>
+            <p>Lujo total: jacuzzi, sala VIP, terraza privada y servicio personalizado.</p>
+            <div class="room-price">$450K <span>COP / noche</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria" style="background:#080603;">
+    <div class="inner">
+      <div class="sec-label">GALERÍA</div>
+      <h2 class="sec-title">Vive la experiencia<br>Posada Central</h2>
+      <div class="gallery">
+        <div class="gal-item">🏨</div>
+        <div class="gal-item">🌿</div>
+        <div class="gal-item">🍽️</div>
+        <div class="gal-item">🏊</div>
+        <div class="gal-item">🌄</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVAS -->
+  <section id="reservas">
+    <div class="inner">
+      <div class="sec-label">RESERVAS</div>
+      <h2 class="sec-title">Reserva tu estadía</h2>
+      <div class="reserva-form">
+        <div class="res-grid">
+          <div class="rfield"><label>NOMBRE COMPLETO</label><input type="text" placeholder="Tu nombre"/></div>
+          <div class="rfield"><label>CORREO</label><input type="email" placeholder="tu@correo.com"/></div>
+          <div class="rfield"><label>LLEGADA</label><input type="date"/></div>
+          <div class="rfield"><label>SALIDA</label><input type="date"/></div>
+        </div>
+        <div class="rfield">
+          <label>TIPO DE HABITACIÓN</label>
+          <select>
+            <option>Habitación Estándar — $120K/noche</option>
+            <option>Suite Junior — $220K/noche</option>
+            <option>Suite Presidencial — $450K/noche</option>
+          </select>
+        </div>
+        <div class="rfield"><label>HUÉSPEDES</label>
+          <select><option>1 persona</option><option>2 personas</option><option>3 personas</option><option>4+ personas</option></select>
+        </div>
+        <button class="btn-gold" style="width:100%;margin-top:8px;" onclick="alert('¡Reserva enviada! Te contactaremos para confirmar.')">CONFIRMAR RESERVA</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Hotel La Posada Central · Piedecuesta, Santander</p>
+    <p style="margin-top:8px;font-size:10px;color:#3a2a12;">Sitio desarrollado por <a href="index.html" style="color:var(--gold);">Webflow CO.</a></p>
+  </footer>
+
+  <script>
+    function toggleAdmin(){
+      document.getElementById('adminBody').classList.toggle('open');
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const t=document.querySelector(a.getAttribute('href'));
+        if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+      });
+    });
+  </script>
+</body>
+</html>
