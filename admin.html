@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="images.ico/webfloww.ico" type="image/x-icon">
-  <title>Admin 👑 Webflow CO</title>
+    <link rel="icon" href="images.ico/webfloww.ico" type="image/x-icon">
+  <title>Admin — Webflow CO.</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{--bg:#08080a;--side:#0e0e12;--card:#13131a;--border:#1f1f2e;--w:#fff;--g:#6b7280;--accent:#7c6aff;--green:#10b981;--red:#ef4444;--yellow:#f59e0b;}
@@ -96,6 +96,52 @@
     .msg-link-btn{background:none;border:none;color:var(--accent);font-size:11px;letter-spacing:1px;cursor:pointer;padding:0;}
     .msg-link-btn:hover{text-decoration:underline;}
     .empty-state{text-align:center;padding:48px 20px;color:#333;font-size:13px;letter-spacing:1px;}
+
+    /* INGRESOS */
+    .ing-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+    .ing-stat{background:#0a0a12;border:1px solid var(--border);border-radius:10px;padding:16px 20px;}
+    .ing-stat .lbl{font-size:10px;letter-spacing:2px;color:var(--g);margin-bottom:6px;}
+    .ing-stat .val{font-size:24px;font-weight:700;font-family:Georgia,serif;}
+    .ing-stat .sub{font-size:11px;color:var(--g);margin-top:4px;}
+    .bar-chart-dyn{display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:10px;}
+    .bar-dyn{flex:1;border-radius:4px 4px 0 0;border:1px solid rgba(124,106,255,.3);transition:all .4s;cursor:pointer;position:relative;min-width:0;}
+    .bar-dyn:hover{filter:brightness(1.3);}
+    .bar-dyn-label{text-align:center;font-size:9px;color:var(--g);margin-top:5px;letter-spacing:1px;}
+    .ing-form-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:16px;}
+    .ing-form-row .field{margin-bottom:0;}
+    .pago-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#0a0a12;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;transition:border .2s;}
+    .pago-item:hover{border-color:#3a3a5a;}
+    .pago-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+    .pago-icon.pse{background:rgba(0,120,200,.15);border:1px solid rgba(0,120,200,.3);}
+    .pago-icon.efec{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);}
+    .pago-icon.trans{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);}
+    .pago-icon.otro{background:rgba(124,106,255,.1);border:1px solid rgba(124,106,255,.2);}
+    .pago-info{flex:1;min-width:0;}
+    .pago-nombre{font-size:13px;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .pago-meta{font-size:11px;color:var(--g);margin-top:2px;}
+    .pago-valor{font-size:15px;font-weight:700;color:var(--green);white-space:nowrap;margin-right:12px;}
+    .pago-valor.egreso{color:var(--red);}
+    .metodo-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border);}
+    .metodo-tab{padding:8px 18px;font-size:11px;letter-spacing:2px;color:var(--g);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
+    .metodo-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+    .pse-guide{background:linear-gradient(135deg,rgba(0,120,200,.08),rgba(0,80,160,.04));border:1px solid rgba(0,120,200,.2);border-radius:12px;padding:24px;}
+    .pse-step{display:flex;gap:14px;margin-bottom:20px;align-items:flex-start;}
+    .pse-num{width:28px;height:28px;background:rgba(0,120,200,.2);border:1px solid rgba(0,120,200,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#60b0ff;flex-shrink:0;margin-top:2px;}
+    .pse-step h4{font-size:13px;margin-bottom:4px;}
+    .pse-step p{font-size:12px;color:var(--g);line-height:1.7;}
+    .code-block{background:#05050a;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:11px;line-height:1.8;color:#a78bfa;overflow-x:auto;margin-top:10px;font-family:monospace;}
+    .code-block .cm{color:#4a5568;}
+    .code-block .ck{color:#7c6aff;}
+    .code-block .cs{color:#10b981;}
+    .provider-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px;}
+    .prov-card{background:#0a0a12;border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;}
+    .prov-card:hover,.prov-card.sel{border-color:var(--accent);}
+    .prov-card.sel{background:rgba(124,106,255,.06);}
+    .prov-logo{font-size:24px;margin-bottom:8px;}
+    .prov-name{font-size:13px;font-weight:600;margin-bottom:4px;}
+    .prov-desc{font-size:11px;color:var(--g);line-height:1.5;}
+    .prov-fee{font-size:10px;color:var(--yellow);margin-top:8px;letter-spacing:1px;}
+
     @media(max-width:900px){
       .sidebar{width:60px;}
       .sb-logo-text,.sb-badge,.sb-section,.sb-user-info,.sb-link span:not(.icon){display:none;}
@@ -126,6 +172,7 @@
       </button>
       <div class="sb-section" style="margin-top:16px;">CONFIGURACIÓN</div>
       <button class="sb-link" onclick="showPage('nuevo-proyecto',this)"><span class="icon">➕</span><span>Nuevo proyecto</span></button>
+      <button class="sb-link" onclick="showPage('ingresos',this)"><span class="icon">💰</span><span>Ingresos / Pagos</span></button>
       <button class="sb-link" onclick="showPage('ajustes',this)"><span class="icon">⚙️</span><span>Ajustes</span></button>
       <button class="sb-link" onclick="showPage('base-datos',this)"><span class="icon">🗃️</span><span>Base de datos</span></button>
     </nav>
@@ -207,15 +254,36 @@
     <!-- CLIENTES -->
     <div class="page" id="page-clientes">
       <div class="card">
-        <div class="card-header"><span class="card-title">CLIENTES REGISTRADOS</span></div>
+        <div class="card-header">
+          <span class="card-title">CLIENTES REGISTRADOS</span>
+          <button class="card-action" onclick="showAddCliente()">+ Agregar</button>
+        </div>
+        <div id="form-cliente" style="display:none;background:#0a0a10;border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:18px;">
+          <div style="font-size:10px;letter-spacing:2px;color:var(--g);margin-bottom:14px;" id="form-cliente-title">NUEVO CLIENTE</div>
+          <input type="hidden" id="cli-edit-id"/>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div class="field" style="margin:0;"><label>NOMBRE *</label><input type="text" id="cli-nombre" placeholder="Nombre completo"/></div>
+            <div class="field" style="margin:0;"><label>EMPRESA</label><input type="text" id="cli-empresa" placeholder="Nombre de la empresa"/></div>
+            <div class="field" style="margin:0;"><label>TELÉFONO</label><input type="tel" id="cli-tel" placeholder="+57 300 000 0000"/></div>
+            <div class="field" style="margin:0;"><label>CORREO</label><input type="email" id="cli-correo" placeholder="cliente@correo.com"/></div>
+            <div class="field" style="margin:0;"><label>ESTADO</label>
+              <select id="cli-estado">
+                <option value="Activo">Activo</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0;"><label>NOTAS</label><input type="text" id="cli-notas" placeholder="Opcional"/></div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-save" onclick="guardarCliente()">GUARDAR</button>
+            <button class="btn-danger" onclick="cancelarCliente()">Cancelar</button>
+          </div>
+        </div>
         <table>
-          <thead><tr><th>NOMBRE</th><th>EMPRESA</th><th>TELÉFONO</th><th>CORREO</th><th>ESTADO</th></tr></thead>
-          <tbody>
-            <tr><td>Juan Pérez</td><td>Hotel La Posada</td><td>+57 310 111 2233</td><td>jperez@posada.com</td><td><span class="badge badge-green">Activo</span></td></tr>
-            <tr><td>Ana Gómez</td><td>El Sabor Resto</td><td>+57 311 444 5566</td><td>ana@elsabor.co</td><td><span class="badge badge-green">Activo</span></td></tr>
-            <tr><td>Dr. Carlos M.</td><td>Clínica Sonrisa</td><td>+57 312 777 8899</td><td>drm@clinica.co</td><td><span class="badge badge-yellow">En proceso</span></td></tr>
-            <tr><td>Sofía Castro</td><td>Moda Elegante</td><td>+57 300 222 3344</td><td>sofia@moda.co</td><td><span class="badge badge-yellow">En proceso</span></td></tr>
-            <tr><td>Lic. Ramírez</td><td>R&A Abogados</td><td>+57 315 555 6677</td><td>lic@rabogados.co</td><td><span class="badge badge-red">Pendiente</span></td></tr>
+          <thead><tr><th>NOMBRE</th><th>EMPRESA</th><th>TELÉFONO</th><th>CORREO</th><th>ESTADO</th><th>ACCIONES</th></tr></thead>
+          <tbody id="tabla-clientes">
           </tbody>
         </table>
       </div>
@@ -235,7 +303,8 @@
     <!-- NUEVO PROYECTO -->
     <div class="page" id="page-nuevo-proyecto">
       <div class="card">
-        <div class="card-header"><span class="card-title">CREAR NUEVO PROYECTO</span></div>
+        <div class="card-header"><span class="card-title" id="np-form-title">CREAR NUEVO PROYECTO</span></div>
+        <input type="hidden" id="np-edit-id" value=""/>
         <div class="form-grid">
           <div class="field"><label>NOMBRE DEL PROYECTO *</label><input type="text" id="np-nombre" placeholder="Ej: Hotel Vista Mar"/></div>
           <div class="field"><label>CLIENTE *</label><input type="text" id="np-cliente" placeholder="Nombre del cliente"/></div>
@@ -269,6 +338,308 @@
         </div>
       </div>
     </div>
+
+    <!-- INGRESOS / PAGOS -->
+    <div class="page" id="page-ingresos">
+
+      <!-- Stats rápidas -->
+      <div class="ing-stats" id="ing-stats-row">
+        <div class="ing-stat"><div class="lbl">INGRESOS TOTALES</div><div class="val" id="ing-total">$0</div><div class="sub">Todos los pagos</div></div>
+        <div class="ing-stat" style="position:relative;">
+          <div class="lbl">MES ACTUAL <button onclick="toggleEditMes()" style="background:none;border:none;color:var(--accent);font-size:10px;letter-spacing:1px;cursor:pointer;margin-left:6px;">✏ editar</button></div>
+          <div class="val" id="ing-mes">$0</div>
+          <div class="sub" id="ing-mes-lbl">—</div>
+          <!-- Panel editar ingreso manual del mes -->
+          <div id="edit-mes-panel" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--card);border:1px solid var(--accent);border-radius:10px;padding:14px;z-index:20;margin-top:6px;min-width:240px;">
+            <div style="font-size:10px;letter-spacing:2px;color:var(--g);margin-bottom:10px;">AJUSTAR INGRESO DEL MES</div>
+            <input type="number" id="edit-mes-val" placeholder="Valor en COP (ej: 2500000)" style="width:100%;background:#0a0a10;border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:#fff;font-size:14px;outline:none;margin-bottom:8px;font-family:inherit;"/>
+            <input type="text" id="edit-mes-nota" placeholder="Nota (ej: Abono cliente X)" style="width:100%;background:#0a0a10;border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:#fff;font-size:14px;outline:none;margin-bottom:10px;font-family:inherit;"/>
+            <div style="display:flex;gap:8px;">
+              <button onclick="guardarEditMes('ingreso')" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:6px;padding:7px;font-size:11px;letter-spacing:1px;cursor:pointer;">+ INGRESO</button>
+              <button onclick="guardarEditMes('egreso')"  style="flex:1;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);border-radius:6px;padding:7px;font-size:11px;letter-spacing:1px;cursor:pointer;">− EGRESO</button>
+              <button onclick="toggleEditMes()" style="background:none;border:1px solid var(--border);color:var(--g);border-radius:6px;padding:7px 10px;font-size:11px;cursor:pointer;">✕</button>
+            </div>
+          </div>
+        </div>
+        <div class="ing-stat"><div class="lbl">PAGOS REGISTRADOS</div><div class="val" id="ing-count">0</div><div class="sub">Transacciones</div></div>
+      </div>
+
+      <!-- Gráfica dinámica -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">INGRESOS POR MES — <span id="ing-anio">2026</span></span>
+          <div style="display:flex;gap:8px;">
+            <button class="card-action" onclick="cambiarAnio(-1)">← Ant</button>
+            <button class="card-action" onclick="cambiarAnio(1)">Sig →</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;align-items:flex-end;">
+          <div style="display:flex;flex-direction:column;justify-content:space-between;height:140px;padding-right:8px;font-size:9px;color:var(--g);text-align:right;" id="ing-eje-y"></div>
+          <div style="flex:1;">
+            <div class="bar-chart-dyn" id="ing-barchart"></div>
+            <div style="display:flex;gap:6px;" id="ing-bar-labels"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs: Nuevo pago / Historial / PSE -->
+      <div class="card">
+        <div class="metodo-tabs">
+          <button class="metodo-tab active" onclick="switchIngTab('nuevo',this)">➕ Registrar pago</button>
+          <button class="metodo-tab" onclick="switchIngTab('historial',this)">📋 Historial</button>
+          <button class="metodo-tab" onclick="switchIngTab('pse',this)">🏦 Conectar PSE</button>
+        </div>
+
+        <!-- TAB: Nuevo pago -->
+        <div id="ingtab-nuevo">
+          <p style="color:var(--g);font-size:13px;margin-bottom:16px;">Registra manualmente un ingreso recibido (transferencia, PSE, efectivo, etc.)</p>
+          <div class="ing-form-row">
+            <div class="field">
+              <label>CONCEPTO</label>
+              <input type="text" id="ing-concepto" placeholder="Ej: Pago proyecto Hotel"/>
+            </div>
+            <div class="field">
+              <label>CLIENTE</label>
+              <input type="text" id="ing-cliente" placeholder="Nombre del cliente"/>
+            </div>
+            <div class="field">
+              <label>VALOR (COP)</label>
+              <input type="number" id="ing-valor" placeholder="500000" min="0"/>
+            </div>
+            <div class="field">
+              <label>MÉTODO</label>
+              <select id="ing-metodo">
+                <option value="PSE">PSE</option>
+                <option value="Transferencia">Transferencia bancaria</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Nequi">Nequi</option>
+                <option value="Daviplata">Daviplata</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>FECHA</label>
+              <input type="date" id="ing-fecha"/>
+            </div>
+          </div>
+          <div class="field" style="max-width:600px;">
+            <label>NOTAS (opcional)</label>
+            <input type="text" id="ing-notas" placeholder="Referencia, número de transacción, abono, etc."/>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:4px;">
+            <button class="btn-save" onclick="registrarPago()">GUARDAR PAGO</button>
+            <button class="btn-save" style="background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);" onclick="registrarPago('egreso')">REGISTRAR EGRESO</button>
+          </div>
+        </div>
+
+        <!-- TAB: Historial -->
+        <div id="ingtab-historial" style="display:none;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div style="display:flex;gap:8px;">
+              <button class="metodo-tab active" style="padding:6px 14px;" id="ftab-todo" onclick="filtrarPagos('todo',this)">Todos</button>
+              <button class="metodo-tab" style="padding:6px 14px;" id="ftab-ingreso" onclick="filtrarPagos('ingreso',this)">Ingresos</button>
+              <button class="metodo-tab" style="padding:6px 14px;" id="ftab-egreso" onclick="filtrarPagos('egreso',this)">Egresos</button>
+            </div>
+            <button class="card-action" style="color:var(--red);" onclick="borrarHistorial()">Borrar todo</button>
+          </div>
+          <div id="lista-pagos">
+            <div class="empty-state">No hay pagos registrados aún.</div>
+          </div>
+        </div>
+
+        <!-- TAB: PSE -->
+        <div id="ingtab-pse" style="display:none;">
+          <p style="color:var(--g);font-size:13px;margin-bottom:20px;">PSE (Pagos Seguros en Línea) es la pasarela de pagos bancaria más usada en Colombia. Aquí cómo integrarlo en tu sitio.</p>
+
+          <!-- Proveedores -->
+          <div style="font-size:10px;letter-spacing:3px;color:var(--g);margin-bottom:12px;">ELIGE UN PROVEEDOR (intermediarios de PSE)</div>
+          <div class="provider-cards">
+            <div class="prov-card sel" id="prov-wompi" onclick="selProv('wompi')">
+              <div class="prov-logo">💳</div>
+              <div class="prov-name">Wompi (Bancolombia)</div>
+              <div class="prov-desc">El más fácil de integrar. API moderna, documentación en español.</div>
+              <div class="prov-fee">Comisión: 2.95% + $900</div>
+            </div>
+            <div class="prov-card" id="prov-epayco" onclick="selProv('epayco')">
+              <div class="prov-logo">🏦</div>
+              <div class="prov-name">ePayco</div>
+              <div class="prov-desc">Pasarela colombiana con soporte para PSE, tarjetas y efectivo.</div>
+              <div class="prov-fee">Comisión: 2.90% + IVA</div>
+            </div>
+            <div class="prov-card" id="prov-payu" onclick="selProv('payu')">
+              <div class="prov-logo">🌐</div>
+              <div class="prov-name">PayU Colombia</div>
+              <div class="prov-desc">Amplia cobertura en Latinoamérica. Ideal para negocios que escalan.</div>
+              <div class="prov-fee">Comisión: 3.49% + IVA</div>
+            </div>
+            <div class="prov-card" id="prov-mercadopago" onclick="selProv('mercadopago')">
+              <div class="prov-logo">🛒</div>
+              <div class="prov-name">Mercado Pago</div>
+              <div class="prov-desc">Muy conocido en Colombia. Soporte PSE y múltiples medios.</div>
+              <div class="prov-fee">Comisión: 3.29% + IVA</div>
+            </div>
+          </div>
+
+          <!-- Guía dinámica por proveedor -->
+          <div id="pse-guia-wompi" class="pse-guide">
+            <div style="font-size:11px;letter-spacing:3px;color:#60b0ff;margin-bottom:16px;">WOMPI — PASO A PASO</div>
+            <div class="pse-step">
+              <div class="pse-num">1</div>
+              <div>
+                <h4>Crear cuenta en Wompi</h4>
+                <p>Ve a <strong style="color:#60b0ff;">comercios.wompi.co</strong> → Regístrate con RUT o cédula → Activa tu cuenta (puede tomar 1-2 días hábiles para producción).</p>
+              </div>
+            </div>
+            <div class="pse-step">
+              <div class="pse-num">2</div>
+              <div>
+                <h4>Obtener llaves de API</h4>
+                <p>En el dashboard de Wompi → Configuración → Llaves de API. Copia tu <strong style="color:#60b0ff;">llave pública</strong> (pub_test_xxx para pruebas).</p>
+              </div>
+            </div>
+            <div class="pse-step">
+              <div class="pse-num">3</div>
+              <div>
+                <h4>Agregar el widget al sitio (opción más simple)</h4>
+                <p>Pega este código en tu <code style="color:var(--accent);">index.html</code> donde quieras el botón de pago:</p>
+                <div class="code-block">
+<span class="cm">&lt;!-- Botón de pago Wompi — pegar en index.html --&gt;</span>
+&lt;form&gt;
+  &lt;script
+    src=<span class="cs">"https://checkout.wompi.co/widget.js"</span>
+    data-render=<span class="cs">"button"</span>
+    data-public-key=<span class="cs">"pub_test_TU_LLAVE_PUBLICA"</span>
+    data-currency=<span class="cs">"COP"</span>
+    data-amount-in-cents=<span class="cs">"50000000"</span> <span class="cm">&lt;!-- $500.000 COP --&gt;</span>
+    data-reference=<span class="cs">"WEBFLOW-001"</span>
+    data-redirect-url=<span class="cs">"https://tudominio.com/gracias"</span>
+  &gt;&lt;/script&gt;
+&lt;/form&gt;</div>
+              </div>
+            </div>
+            <div class="pse-step">
+              <div class="pse-num">4</div>
+              <div>
+                <h4>Opción avanzada: API REST (monto dinámico)</h4>
+                <p>Para cobrar el monto exacto del proyecto, usa la API desde tu backend:</p>
+                <div class="code-block">
+<span class="cm">// Node.js / Express — crear transacción Wompi</span>
+<span class="ck">const</span> axios = <span class="ck">require</span>(<span class="cs">'axios'</span>);
+
+<span class="ck">async function</span> crearPagoWompi(monto, referencia, email) {
+  <span class="ck">const</span> res = <span class="ck">await</span> axios.post(
+    <span class="cs">'https://sandbox.wompi.co/v1/transactions'</span>,
+    {
+      amount_in_cents: monto * 100, <span class="cm">// $500K → 50000000</span>
+      currency: <span class="cs">'COP'</span>,
+      customer_email: email,
+      reference: referencia,
+      payment_method: { type: <span class="cs">'PSE'</span>, user_type: 0, user_legal_id_type: <span class="cs">'CC'</span>, user_legal_id: <span class="cs">'123456'</span>, financial_institution_code: <span class="cs">'1022'</span> }
+    },
+    { headers: { Authorization: <span class="cs">`Bearer TU_LLAVE_PRIVADA`</span> } }
+  );
+  <span class="ck">return</span> res.data; <span class="cm">// contiene redirect_url → envía al usuario</span>
+}</div>
+              </div>
+            </div>
+            <div class="pse-step">
+              <div class="pse-num">5</div>
+              <div>
+                <h4>Webhook — recibir confirmación de pago</h4>
+                <p>Wompi notifica tu servidor cuando el pago es aprobado. Configura la URL en tu dashboard:</p>
+                <div class="code-block">
+<span class="cm">// Endpoint que Wompi llama automáticamente al pagar</span>
+app.post(<span class="cs">'/webhook/wompi'</span>, (req, res) => {
+  <span class="ck">const</span> { event, data } = req.body;
+  <span class="ck">if</span> (event === <span class="cs">'transaction.updated'</span> && data.transaction.status === <span class="cs">'APPROVED'</span>) {
+    <span class="ck">const</span> ref = data.transaction.reference;
+    <span class="ck">const</span> monto = data.transaction.amount_in_cents / 100;
+    <span class="cm">// Aquí: guardar en BD, enviar email, marcar proyecto como pagado</span>
+    console.log(<span class="cs">`Pago recibido: $${monto} COP — Ref: ${ref}`</span>);
+  }
+  res.sendStatus(200);
+});</div>
+              </div>
+            </div>
+            <div style="margin-top:16px;padding:12px 16px;background:rgba(0,120,200,.08);border-radius:8px;border:1px solid rgba(0,120,200,.2);">
+              <p style="font-size:12px;color:#60b0ff;line-height:1.8;">
+                🔗 <strong>Documentación oficial:</strong> <a href="https://docs.wompi.co" target="_blank" style="color:#60b0ff;">docs.wompi.co</a><br>
+                🧪 <strong>Sandbox:</strong> sandbox.wompi.co (pruebas sin dinero real)<br>
+                📞 <strong>Soporte:</strong> soporte@wompi.co
+              </p>
+            </div>
+          </div>
+
+          <div id="pse-guia-epayco" class="pse-guide" style="display:none;">
+            <div style="font-size:11px;letter-spacing:3px;color:#60b0ff;margin-bottom:16px;">EPAYCO — PASO A PASO</div>
+            <div class="pse-step"><div class="pse-num">1</div><div><h4>Crear cuenta</h4><p>Regístrate en <strong style="color:#60b0ff;">epayco.co</strong> → Activa tu cuenta de comercio → Obtén P_CUST_ID_CLIENTE y P_KEY desde el dashboard.</p></div></div>
+            <div class="pse-step"><div class="pse-num">2</div><div><h4>Integrar el script</h4>
+              <div class="code-block">
+&lt;script src=<span class="cs">"https://checkout.epayco.co/checkout.js"</span>
+  class=<span class="cs">"epayco-button"</span>
+  data-epayco-key=<span class="cs">"TU_PUBLIC_KEY"</span>
+  data-epayco-amount=<span class="cs">"500000"</span>
+  data-epayco-name=<span class="cs">"Proyecto Web"</span>
+  data-epayco-description=<span class="cs">"Desarrollo sitio web"</span>
+  data-epayco-currency=<span class="cs">"cop"</span>
+  data-epayco-country=<span class="cs">"co"</span>
+  data-epayco-test=<span class="cs">"true"</span>
+  data-epayco-email-billing=<span class="cs">"cliente@correo.com"</span>
+&gt;&lt;/script&gt;</div>
+            </div></div>
+            <div style="margin-top:16px;padding:12px 16px;background:rgba(0,120,200,.08);border-radius:8px;border:1px solid rgba(0,120,200,.2);font-size:12px;color:#60b0ff;line-height:1.8;">
+              🔗 <strong>Docs:</strong> <a href="https://docs.epayco.co" target="_blank" style="color:#60b0ff;">docs.epayco.co</a>
+            </div>
+          </div>
+
+          <div id="pse-guia-payu" class="pse-guide" style="display:none;">
+            <div style="font-size:11px;letter-spacing:3px;color:#60b0ff;margin-bottom:16px;">PAYU — PASO A PASO</div>
+            <div class="pse-step"><div class="pse-num">1</div><div><h4>Crear cuenta de comercio</h4><p>Solicita tu cuenta en <strong style="color:#60b0ff;">colombia.payu.com</strong>. Necesitas RUT, cuenta bancaria y documentos del negocio. Aprobación en 3-5 días hábiles.</p></div></div>
+            <div class="pse-step"><div class="pse-num">2</div><div><h4>Integrar PayU Checkout</h4>
+              <div class="code-block">
+<span class="cm">// Formulario de pago PayU (Colombia)</span>
+&lt;form method=<span class="cs">"post"</span> action=<span class="cs">"https://checkout.payulatam.com/ppp-web-gateway-payu/"</span>&gt;
+  &lt;input name=<span class="cs">"merchantId"</span>    value=<span class="cs">"TU_MERCHANT_ID"</span>/&gt;
+  &lt;input name=<span class="cs">"accountId"</span>     value=<span class="cs">"TU_ACCOUNT_ID"</span>/&gt;
+  &lt;input name=<span class="cs">"description"</span>   value=<span class="cs">"Proyecto Webflow CO."</span>/&gt;
+  &lt;input name=<span class="cs">"referenceCode"</span> value=<span class="cs">"WF-001"</span>/&gt;
+  &lt;input name=<span class="cs">"amount"</span>        value=<span class="cs">"500000"</span>/&gt;
+  &lt;input name=<span class="cs">"currency"</span>      value=<span class="cs">"COP"</span>/&gt;
+  &lt;input name=<span class="cs">"signature"</span>     value=<span class="cs">"MD5_FIRMA"</span>/&gt; <span class="cm">&lt;!-- generada en backend --&gt;</span>
+  &lt;input name=<span class="cs">"test"</span>          value=<span class="cs">"1"</span>/&gt;
+  &lt;button type=<span class="cs">"submit"</span>&gt;Pagar con PSE&lt;/button&gt;
+&lt;/form&gt;</div>
+            </div></div>
+            <div style="margin-top:16px;padding:12px 16px;background:rgba(0,120,200,.08);border-radius:8px;border:1px solid rgba(0,120,200,.2);font-size:12px;color:#60b0ff;line-height:1.8;">
+              🔗 <strong>Docs:</strong> <a href="https://developers.payulatam.com/latam/es/docs/integrations.html" target="_blank" style="color:#60b0ff;">developers.payulatam.com</a>
+            </div>
+          </div>
+
+          <div id="pse-guia-mercadopago" class="pse-guide" style="display:none;">
+            <div style="font-size:11px;letter-spacing:3px;color:#60b0ff;margin-bottom:16px;">MERCADO PAGO — PASO A PASO</div>
+            <div class="pse-step"><div class="pse-num">1</div><div><h4>Crear cuenta y aplicación</h4><p>Ve a <strong style="color:#60b0ff;">mercadopago.com.co</strong> → Tus integraciones → Crea una app → Obtén ACCESS_TOKEN y PUBLIC_KEY.</p></div></div>
+            <div class="pse-step"><div class="pse-num">2</div><div><h4>Checkout Pro (más fácil)</h4>
+              <div class="code-block">
+<span class="cm">// Backend Node.js — crear preferencia de pago</span>
+<span class="ck">const</span> { MercadoPagoConfig, Preference } = require(<span class="cs">'mercadopago'</span>);
+<span class="ck">const</span> client = <span class="ck">new</span> MercadoPagoConfig({ accessToken: <span class="cs">'TU_ACCESS_TOKEN'</span> });
+
+<span class="ck">const</span> pref = <span class="ck">new</span> Preference(client);
+<span class="ck">const</span> result = <span class="ck">await</span> pref.create({ body: {
+  items: [{ title: <span class="cs">'Proyecto Webflow CO.'</span>, quantity: 1, unit_price: 500000 }],
+  back_urls: { success: <span class="cs">'https://tudominio.com/gracias'</span>, failure: <span class="cs">'https://tudominio.com/error'</span> },
+  auto_return: <span class="cs">'approved'</span>
+}});
+<span class="cm">// Redirige al usuario a: result.init_point</span></div>
+            </div></div>
+            <div style="margin-top:16px;padding:12px 16px;background:rgba(0,120,200,.08);border-radius:8px;border:1px solid rgba(0,120,200,.2);font-size:12px;color:#60b0ff;line-height:1.8;">
+              🔗 <strong>Docs:</strong> <a href="https://www.mercadopago.com.co/developers" target="_blank" style="color:#60b0ff;">mercadopago.com.co/developers</a>
+            </div>
+          </div>
+
+        </div><!-- fin tab pse -->
+      </div><!-- fin card -->
+    </div><!-- fin page ingresos -->
 
     <!-- AJUSTES -->
     <div class="page" id="page-ajustes">
@@ -312,17 +683,23 @@
 
   </main>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============================================================
-// CLAVES localStorage — compartidas con index.html
+// CLAVES localStorage
 // ============================================================
 const K_MSG  = 'wf_mensajes';
 const K_PROY = 'wf_proyectos';
+const K_ING  = 'wf_ingresos';
+const K_CLI  = 'wf_clientes';
 
 // ============================================================
 // NAVEGACIÓN
 // ============================================================
-const TITLES = {dashboard:'Dashboard',proyectos:'Proyectos',clientes:'Clientes',mensajes:'Mensajes','nuevo-proyecto':'Nuevo Proyecto',ajustes:'Ajustes','base-datos':'Base de Datos'};
+const TITLES = {
+  dashboard:'Dashboard', proyectos:'Proyectos', clientes:'Clientes',
+  mensajes:'Mensajes', 'nuevo-proyecto':'Nuevo Proyecto',
+  ingresos:'Ingresos / Pagos', ajustes:'Ajustes', 'base-datos':'Base de Datos'
+};
 
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -333,7 +710,9 @@ function showPage(id, btn) {
   document.getElementById('pageTitle').textContent = TITLES[id] || id;
   if (id === 'proyectos')      renderProyectos();
   if (id === 'mensajes')       renderMensajes();
+  if (id === 'clientes')       renderClientes();
   if (id === 'dashboard')      renderDashboard();
+  if (id === 'ingresos')       { renderIngStats(); renderBarChart(); renderListaPagos(); }
   if (id === 'nuevo-proyecto') limpiarFormProyecto();
 }
 
@@ -350,29 +729,30 @@ const ESTADO_BADGE = {Entregado:'badge-green','En revisión':'badge-yellow','En 
 const ESTADO_PCT   = {Entregado:100,'En revisión':70,'En desarrollo':40,Pendiente:10,Consultando:20};
 const ESTADO_COLOR = {Entregado:'var(--green)','En revisión':'var(--yellow)','En desarrollo':'var(--accent)',Pendiente:'var(--red)',Consultando:'var(--red)'};
 
-function getProy()       { try { return JSON.parse(localStorage.getItem(K_PROY)) || []; } catch(e) { return []; } }
-function saveProy(arr)   { localStorage.setItem(K_PROY, JSON.stringify(arr)); }
+function getProy()     { try { return JSON.parse(localStorage.getItem(K_PROY)) || []; } catch(e) { return []; } }
+function saveProy(arr) { localStorage.setItem(K_PROY, JSON.stringify(arr)); }
 
 function limpiarFormProyecto() {
   ['np-nombre','np-cliente','np-correo','np-telefono','np-valor','np-fecha','np-desc'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
+    const el = document.getElementById(id); if (el) el.value = '';
   });
   const pl = document.getElementById('np-plan');
   const es = document.getElementById('np-estado');
+  const eid = document.getElementById('np-edit-id');
+  const tit = document.getElementById('np-form-title');
   if (pl) pl.selectedIndex = 0;
   if (es) es.selectedIndex = 0;
+  if (eid) eid.value = '';
+  if (tit) tit.textContent = 'CREAR NUEVO PROYECTO';
 }
 
 function agregarProyecto() {
   const nombre  = document.getElementById('np-nombre').value.trim();
   const cliente = document.getElementById('np-cliente').value.trim();
-  if (!nombre || !cliente) { alert('Completa al menos el Nombre del proyecto y el Cliente.'); return; }
-
-  const p = {
-    id:       Date.now(),
-    nombre,
-    cliente,
+  if (!nombre || !cliente) { alert('Completa al menos el Nombre y el Cliente.'); return; }
+  const editId = document.getElementById('np-edit-id').value;
+  const datos  = {
+    nombre, cliente,
     correo:   document.getElementById('np-correo').value.trim(),
     telefono: document.getElementById('np-telefono').value.trim(),
     plan:     document.getElementById('np-plan').value,
@@ -380,49 +760,169 @@ function agregarProyecto() {
     estado:   document.getElementById('np-estado').value,
     fecha:    document.getElementById('np-fecha').value.trim() || '—',
     desc:     document.getElementById('np-desc').value.trim(),
-    creado:   new Date().toLocaleString('es-CO')
   };
-
-  const arr = getProy();
-  arr.unshift(p);
-  saveProy(arr);
-
-  alert('Proyecto "' + nombre + '" guardado correctamente ✓');
+  let arr = getProy();
+  if (editId) {
+    arr = arr.map(p => p.id === parseInt(editId) ? { ...p, ...datos } : p);
+    saveProy(arr);
+    alert('Proyecto "' + nombre + '" actualizado ✓');
+  } else {
+    arr.unshift({ id: Date.now(), ...datos, creado: new Date().toLocaleString('es-CO') });
+    saveProy(arr);
+    alert('Proyecto "' + nombre + '" guardado ✓');
+  }
+  limpiarFormProyecto();
   showPage('proyectos', null);
 }
 
+function editarProyecto(id) {
+  const p = getProy().find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('np-nombre').value   = p.nombre   || '';
+  document.getElementById('np-cliente').value  = p.cliente  || '';
+  document.getElementById('np-correo').value   = p.correo   || '';
+  document.getElementById('np-telefono').value = p.telefono || '';
+  document.getElementById('np-valor').value    = (p.valor && p.valor !== '—') ? p.valor : '';
+  document.getElementById('np-fecha').value    = (p.fecha && p.fecha !== '—') ? p.fecha : '';
+  document.getElementById('np-desc').value     = p.desc     || '';
+  const planSel = document.getElementById('np-plan');
+  for (let i=0;i<planSel.options.length;i++) if (planSel.options[i].value===p.plan){planSel.selectedIndex=i;break;}
+  const estSel = document.getElementById('np-estado');
+  for (let i=0;i<estSel.options.length;i++) if (estSel.options[i].value===p.estado){estSel.selectedIndex=i;break;}
+  document.getElementById('np-edit-id').value = id;
+  const tit = document.getElementById('np-form-title');
+  if (tit) tit.textContent = 'EDITAR PROYECTO';
+  showPage('nuevo-proyecto', null);
+}
+
 function eliminarProyecto(id) {
-  if (!confirm('¿Eliminar este proyecto? Esta acción no se puede deshacer.')) return;
+  if (!confirm('¿Eliminar este proyecto?')) return;
   saveProy(getProy().filter(p => p.id !== id));
-  renderProyectos();
-  renderDashboard();
+  renderProyectos(); renderDashboard();
 }
 
 function renderProyectos() {
   const arr   = getProy();
   const tbody = document.getElementById('tabla-proyectos');
   if (!tbody) return;
-
   if (arr.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No hay proyectos registrados aún. <a href="#" onclick="showPage('nuevo-proyecto',null);return false;" style="color:var(--accent);">Agregar uno →</a></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No hay proyectos. <a href="#" onclick="showPage('nuevo-proyecto',null);return false;" style="color:var(--accent);">Agregar →</a></td></tr>`;
     return;
   }
-
   tbody.innerHTML = arr.map(p => `
     <tr>
-      <td><strong style="color:#eee;">${p.nombre}</strong>${p.desc ? `<br><small style="color:#555;">${p.desc.substring(0,50)}${p.desc.length>50?'...':''}</small>` : ''}</td>
-      <td>${p.cliente}${p.correo ? `<br><small style="color:#555;">${p.correo}</small>` : ''}</td>
+      <td><strong style="color:#eee;">${p.nombre}</strong>${p.desc?`<br><small style="color:#555;">${p.desc.substring(0,50)}${p.desc.length>50?'...':''}</small>`:''}</td>
+      <td>${p.cliente}${p.correo?`<br><small style="color:#555;">${p.correo}</small>`:''}</td>
       <td><span class="badge ${PLAN_BADGE[p.plan]||'badge-purple'}">${p.plan}</span></td>
       <td>${p.valor}</td>
       <td><span class="badge ${ESTADO_BADGE[p.estado]||'badge-red'}">${p.estado}</span></td>
       <td>${p.fecha}</td>
-      <td><button class="btn-del" onclick="eliminarProyecto(${p.id})">Eliminar</button></td>
-    </tr>
-  `).join('');
+      <td style="display:flex;gap:6px;">
+        <button class="btn-del" style="background:rgba(124,106,255,.12);border-color:var(--accent);color:var(--accent);" onclick="editarProyecto(${p.id})">Editar</button>
+        <button class="btn-del" onclick="eliminarProyecto(${p.id})">Eliminar</button>
+      </td>
+    </tr>`).join('');
 }
 
 // ============================================================
-// MENSAJES — conectados con index.html via localStorage
+// CLIENTES
+// ============================================================
+const CLI_DEFAULTS = [
+  {id:1,nombre:'Juan Pérez',empresa:'Hotel La Posada',tel:'+57 310 111 2233',correo:'jperez@posada.com',estado:'Activo',notas:''},
+  {id:2,nombre:'Ana Gómez',empresa:'El Sabor Resto',tel:'+57 311 444 5566',correo:'ana@elsabor.co',estado:'Activo',notas:''},
+  {id:3,nombre:'Dr. Carlos M.',empresa:'Clínica Sonrisa',tel:'+57 312 777 8899',correo:'drm@clinica.co',estado:'En proceso',notas:''},
+  {id:4,nombre:'Sofía Castro',empresa:'Moda Elegante',tel:'+57 300 222 3344',correo:'sofia@moda.co',estado:'En proceso',notas:''},
+  {id:5,nombre:'Lic. Ramírez',empresa:'R&A Abogados',tel:'+57 315 555 6677',correo:'lic@rabogados.co',estado:'Pendiente',notas:''},
+];
+const CLI_BADGE = {Activo:'badge-green','En proceso':'badge-yellow',Pendiente:'badge-red',Inactivo:'badge-red'};
+
+function getCli()     { try { const d=JSON.parse(localStorage.getItem(K_CLI)); return Array.isArray(d)&&d.length?d:CLI_DEFAULTS; } catch(e){return CLI_DEFAULTS;} }
+function saveCli(arr) { localStorage.setItem(K_CLI, JSON.stringify(arr)); }
+
+function renderClientes() {
+  const arr   = getCli();
+  const tbody = document.getElementById('tabla-clientes');
+  if (!tbody) return;
+  if (arr.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No hay clientes registrados.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = arr.map(c => `
+    <tr>
+      <td><strong style="color:#eee;">${c.nombre}</strong>${c.notas?`<br><small style="color:#555;">${c.notas}</small>`:''}</td>
+      <td>${c.empresa||'—'}</td>
+      <td>${c.tel||'—'}</td>
+      <td>${c.correo?`<a href="mailto:${c.correo}" style="color:var(--accent);">${c.correo}</a>`:'—'}</td>
+      <td><span class="badge ${CLI_BADGE[c.estado]||'badge-red'}">${c.estado}</span></td>
+      <td style="display:flex;gap:6px;">
+        <button class="btn-del" style="background:rgba(124,106,255,.12);border-color:var(--accent);color:var(--accent);" onclick="editarCliente(${c.id})">Editar</button>
+        <button class="btn-del" onclick="eliminarCliente(${c.id})">Eliminar</button>
+      </td>
+    </tr>`).join('');
+}
+
+function showAddCliente() {
+  cancelarCliente();
+  document.getElementById('form-cliente').style.display = 'block';
+  document.getElementById('form-cliente-title').textContent = 'NUEVO CLIENTE';
+  document.getElementById('cli-edit-id').value = '';
+  ['cli-nombre','cli-empresa','cli-tel','cli-correo','cli-notas'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('cli-estado').selectedIndex = 0;
+}
+
+function cancelarCliente() {
+  const f = document.getElementById('form-cliente');
+  if (f) f.style.display = 'none';
+}
+
+function editarCliente(id) {
+  const c = getCli().find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('cli-edit-id').value  = id;
+  document.getElementById('cli-nombre').value   = c.nombre  || '';
+  document.getElementById('cli-empresa').value  = c.empresa || '';
+  document.getElementById('cli-tel').value      = c.tel     || '';
+  document.getElementById('cli-correo').value   = c.correo  || '';
+  document.getElementById('cli-notas').value    = c.notas   || '';
+  const esSel = document.getElementById('cli-estado');
+  for (let i=0;i<esSel.options.length;i++) if(esSel.options[i].value===c.estado){esSel.selectedIndex=i;break;}
+  document.getElementById('form-cliente-title').textContent = 'EDITAR CLIENTE';
+  document.getElementById('form-cliente').style.display = 'block';
+  document.getElementById('form-cliente').scrollIntoView({behavior:'smooth'});
+}
+
+function guardarCliente() {
+  const nombre = document.getElementById('cli-nombre').value.trim();
+  if (!nombre) { alert('El nombre es obligatorio.'); return; }
+  const editId = document.getElementById('cli-edit-id').value;
+  const datos  = {
+    nombre,
+    empresa: document.getElementById('cli-empresa').value.trim(),
+    tel:     document.getElementById('cli-tel').value.trim(),
+    correo:  document.getElementById('cli-correo').value.trim(),
+    estado:  document.getElementById('cli-estado').value,
+    notas:   document.getElementById('cli-notas').value.trim(),
+  };
+  let arr = getCli();
+  if (editId) {
+    arr = arr.map(c => c.id===parseInt(editId) ? {...c,...datos} : c);
+  } else {
+    arr.unshift({id: Date.now(), ...datos});
+  }
+  saveCli(arr);
+  cancelarCliente();
+  renderClientes();
+}
+
+function eliminarCliente(id) {
+  if (!confirm('¿Eliminar este cliente?')) return;
+  saveCli(getCli().filter(c => c.id !== id));
+  renderClientes();
+}
+
+// ============================================================
+// MENSAJES — via localStorage (mismo dispositivo)
+// Para sincronizar entre dispositivos → usar Firebase (ver db-guide.html)
 // ============================================================
 function getMsg()      { try { return JSON.parse(localStorage.getItem(K_MSG)) || []; } catch(e) { return []; } }
 function saveMsg(arr)  { localStorage.setItem(K_MSG, JSON.stringify(arr)); actualizarBadge(); }
@@ -438,39 +938,35 @@ function actualizarBadge() {
 function eliminarMensaje(id) {
   if (!confirm('¿Eliminar este mensaje?')) return;
   saveMsg(getMsg().filter(m => m.id !== id));
-  renderMensajes();
-  renderDashboard();
+  renderMensajes(); renderDashboard();
 }
 
 function borrarTodos() {
   if (getMsg().length === 0) { alert('No hay mensajes para borrar.'); return; }
-  if (!confirm('¿Borrar TODOS los mensajes? Esta acción no se puede deshacer.')) return;
-  saveMsg([]);
-  renderMensajes();
-  renderDashboard();
+  if (!confirm('¿Borrar TODOS los mensajes?')) return;
+  saveMsg([]); renderMensajes(); renderDashboard();
 }
 
 function marcarLeido(id) {
-  saveMsg(getMsg().map(m => m.id === id ? {...m, leido: true} : m));
+  saveMsg(getMsg().map(m => m.id === id ? {...m, leido:true} : m));
   actualizarBadge();
 }
 
 function toggleDetalle(id) {
-  const el = document.getElementById('det-' + id);
+  const el  = document.getElementById('det-' + id);
+  const btn = document.getElementById('togbtn-' + id);
   if (!el) return;
   const abierto = el.style.display === 'block';
   el.style.display = abierto ? 'none' : 'block';
-  const btn = document.getElementById('togbtn-' + id);
   if (btn) btn.textContent = abierto ? 'Ver mensaje completo' : 'Ocultar';
   if (!abierto) marcarLeido(id);
 }
 
 function tiempoRelativo(ts) {
-  const d = Date.now() - ts;
-  const m = Math.floor(d/60000), h = Math.floor(d/3600000), dias = Math.floor(d/86400000);
-  if (m < 1)  return 'Ahora mismo';
-  if (m < 60) return `Hace ${m} min`;
-  if (h < 24) return `Hace ${h}h`;
+  const d=Date.now()-ts, m=Math.floor(d/60000), h=Math.floor(d/3600000), dias=Math.floor(d/86400000);
+  if (m<1)  return 'Ahora mismo';
+  if (m<60) return `Hace ${m} min`;
+  if (h<24) return `Hace ${h}h`;
   return `Hace ${dias} día${dias>1?'s':''}`;
 }
 
@@ -478,23 +974,22 @@ function renderMensajes() {
   const arr  = getMsg();
   const cont = document.getElementById('lista-mensajes');
   if (!cont) return;
-
   if (arr.length === 0) {
-    cont.innerHTML = '<div class="empty-state">No hay mensajes aún.<br>Los mensajes enviados desde el formulario de contacto del sitio aparecerán aquí automáticamente.</div>';
+    cont.innerHTML = `<div class="empty-state">
+      No hay mensajes aún.<br>
+      Los mensajes del formulario de contacto del sitio aparecen aquí (mismo dispositivo/navegador).<br><br>
+      <small style="color:#444;">💡 Para sincronizar entre dispositivos conecta Firebase — ver <a href="db-guide.html" target="_blank" style="color:var(--accent);">db-guide.html</a></small>
+    </div>`;
     return;
   }
-
   cont.innerHTML = arr.map(m => `
-    <div class="msg-item ${m.leido ? '' : 'unread'}">
+    <div class="msg-item ${m.leido?'':'unread'}">
       <div class="msg-header">
-        <span class="msg-from">
-          ${m.nombre}
-          ${!m.leido ? '<span class="badge badge-purple" style="margin-left:8px;font-size:9px;">NUEVO</span>' : ''}
-        </span>
+        <span class="msg-from">${m.nombre}${!m.leido?'<span class="badge badge-purple" style="margin-left:8px;font-size:9px;">NUEVO</span>':''}</span>
         <span class="msg-time">${tiempoRelativo(m.ts)}</span>
       </div>
       <div class="msg-preview">${(m.mensaje||'(sin mensaje)').substring(0,100)}${m.mensaje&&m.mensaje.length>100?'...':''}</div>
-      <div class="msg-full" id="det-${m.id}">
+      <div class="msg-full" id="det-${m.id}" style="display:none;">
         <table style="border:none;margin:0;">
           <tr><td style="color:var(--g);font-size:11px;letter-spacing:1px;padding:4px 12px 4px 0;border:none;width:80px;">CORREO</td><td style="border:none;padding:4px 0;">${m.correo||'—'}</td></tr>
           <tr><td style="color:var(--g);font-size:11px;letter-spacing:1px;padding:4px 12px 4px 0;border:none;">TELÉFONO</td><td style="border:none;padding:4px 0;">${m.telefono||'—'}</td></tr>
@@ -506,39 +1001,206 @@ function renderMensajes() {
         <button id="togbtn-${m.id}" class="msg-link-btn" onclick="toggleDetalle(${m.id})">Ver mensaje completo</button>
         <span style="color:#333;">·</span>
         <button class="btn-del" style="padding:3px 10px;font-size:10px;" onclick="eliminarMensaje(${m.id})">Eliminar</button>
-        ${m.correo ? `<span style="color:#333;">·</span><a href="mailto:${m.correo}?subject=Re: Cotización Webflow CO." style="color:var(--accent);font-size:11px;letter-spacing:1px;text-decoration:none;">Responder →</a>` : ''}
+        ${m.correo?`<span style="color:#333;">·</span><a href="mailto:${m.correo}?subject=Re: Cotización Webflow CO." style="color:var(--accent);font-size:11px;letter-spacing:1px;text-decoration:none;">Responder →</a>`:''}
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
+}
+
+// ============================================================
+// INGRESOS / PAGOS
+// ============================================================
+let ingAnio      = new Date().getFullYear();
+let filtroActual = 'todo';
+const MESES       = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+const METODO_ICON = {PSE:'🏦',Transferencia:'🔁',Efectivo:'💵',Nequi:'📱',Daviplata:'📲',Otro:'💳'};
+const METODO_CLS  = {PSE:'pse',Transferencia:'trans',Efectivo:'efec',Nequi:'pse',Daviplata:'pse',Otro:'otro'};
+
+function getIng()     { try { return JSON.parse(localStorage.getItem(K_ING)) || []; } catch(e) { return []; } }
+function saveIng(arr) { localStorage.setItem(K_ING, JSON.stringify(arr)); }
+
+function fmtCOP(n) {
+  if (!n && n!==0) return '$0';
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1).replace('.0','') + 'M';
+  if (n >= 1000)    return '$' + Math.round(n/1000) + 'K';
+  return '$' + n;
+}
+
+// Editar ingreso del mes directamente desde la stat card
+function toggleEditMes() {
+  const panel = document.getElementById('edit-mes-panel');
+  if (!panel) return;
+  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  if (panel.style.display === 'block') {
+    const inp = document.getElementById('edit-mes-val');
+    if (inp) inp.focus();
+  }
+}
+
+function guardarEditMes(tipo) {
+  const val   = parseFloat(document.getElementById('edit-mes-val').value);
+  const nota  = document.getElementById('edit-mes-nota').value.trim();
+  if (!val || val <= 0) { alert('Ingresa un valor mayor a 0.'); return; }
+  const hoy   = new Date().toISOString().split('T')[0];
+  const p     = { id: Date.now(), ts: Date.now(), tipo, concepto: nota || (tipo==='ingreso'?'Ingreso manual':'Egreso manual'), cliente: '', valor: val, metodo: 'Transferencia', fecha: hoy, notas: nota };
+  const arr   = getIng(); arr.unshift(p); saveIng(arr);
+  document.getElementById('edit-mes-val').value  = '';
+  document.getElementById('edit-mes-nota').value = '';
+  toggleEditMes();
+  renderIngStats(); renderBarChart(); renderListaPagos(); renderDashboard();
+  alert((tipo==='ingreso'?'Ingreso':'Egreso') + ' de ' + fmtCOP(val) + ' COP registrado ✓');
+}
+
+function registrarPago(tipo) {
+  tipo = tipo || 'ingreso';
+  const concepto = document.getElementById('ing-concepto').value.trim();
+  const valor    = parseFloat(document.getElementById('ing-valor').value);
+  if (!concepto || !valor || valor <= 0) { alert('Completa el Concepto y el Valor.'); return; }
+  const p = {
+    id: Date.now(), ts: Date.now(), tipo, concepto,
+    cliente: document.getElementById('ing-cliente').value.trim(),
+    valor,
+    metodo:  document.getElementById('ing-metodo').value,
+    fecha:   document.getElementById('ing-fecha').value || new Date().toISOString().split('T')[0],
+    notas:   document.getElementById('ing-notas').value.trim(),
+  };
+  const arr = getIng(); arr.unshift(p); saveIng(arr);
+  ['ing-concepto','ing-cliente','ing-valor','ing-notas'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('ing-metodo').selectedIndex = 0;
+  renderIngStats(); renderBarChart(); renderListaPagos(); renderDashboard();
+  alert((tipo==='ingreso'?'Ingreso':'Egreso') + ' de ' + fmtCOP(valor) + ' COP registrado ✓');
+}
+
+function eliminarPago(id) {
+  if (!confirm('¿Eliminar este registro?')) return;
+  saveIng(getIng().filter(p => p.id !== id));
+  renderIngStats(); renderBarChart(); renderListaPagos(); renderDashboard();
+}
+
+function borrarHistorial() {
+  if (!confirm('¿Borrar TODO el historial?')) return;
+  saveIng([]); renderIngStats(); renderBarChart(); renderListaPagos(); renderDashboard();
+}
+
+function filtrarPagos(tipo, btn) {
+  filtroActual = tipo;
+  document.querySelectorAll('#ingtab-historial .metodo-tab').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderListaPagos();
+}
+
+function renderIngStats() {
+  const arr    = getIng();
+  const ing    = arr.filter(p => p.tipo==='ingreso');
+  const egr    = arr.filter(p => p.tipo==='egreso');
+  const total  = ing.reduce((s,p)=>s+p.valor,0) - egr.reduce((s,p)=>s+p.valor,0);
+  const mesAct = new Date().getMonth(), anioAct = new Date().getFullYear();
+  const mesPagos = ing.filter(p=>{const d=new Date(p.fecha);return d.getMonth()===mesAct&&d.getFullYear()===anioAct;});
+  const totalMes = mesPagos.reduce((s,p)=>s+p.valor,0);
+  const el = id => document.getElementById(id);
+  if (el('ing-total'))   el('ing-total').textContent   = fmtCOP(Math.max(0,total));
+  if (el('ing-mes'))     el('ing-mes').textContent     = fmtCOP(totalMes);
+  if (el('ing-mes-lbl')) el('ing-mes-lbl').textContent = MESES[mesAct]+' '+anioAct;
+  if (el('ing-count'))   el('ing-count').textContent   = arr.length;
+}
+
+function renderBarChart() {
+  const arr   = getIng().filter(p=>p.tipo==='ingreso');
+  const chart = document.getElementById('ing-barchart');
+  const lbls  = document.getElementById('ing-bar-labels');
+  const ejeY  = document.getElementById('ing-eje-y');
+  if (!chart) return;
+  const byMes = Array(12).fill(0);
+  arr.forEach(p=>{const d=new Date(p.fecha);if(d.getFullYear()===ingAnio)byMes[d.getMonth()]+=p.valor;});
+  const max = Math.max(...byMes, 1);
+  const anioEl = document.getElementById('ing-anio');
+  if (anioEl) anioEl.textContent = ingAnio;
+  if (ejeY) {
+    ejeY.innerHTML = [max,max*.75,max*.5,max*.25,0].map(v=>`<span>${fmtCOP(Math.round(v))}</span>`).join('');
+  }
+  const mesAct=new Date().getMonth(), anioAct=new Date().getFullYear();
+  chart.innerHTML = MESES.map((m,i)=>{
+    const pct   = byMes[i]>0?Math.max(4,Math.round((byMes[i]/max)*100)):4;
+    const isMes = i===mesAct&&ingAnio===anioAct;
+    const bg    = byMes[i]>0?(isMes?'rgba(124,106,255,.65)':'rgba(124,106,255,.28)'):'rgba(124,106,255,.06)';
+    const bdr   = byMes[i]>0?(isMes?'rgba(124,106,255,1)':'rgba(124,106,255,.4)'):'rgba(124,106,255,.12)';
+    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div class="bar-dyn" title="${m} ${ingAnio}: ${fmtCOP(byMes[i])}" style="height:${pct}%;background:${bg};border-color:${bdr};width:100%;border-radius:4px 4px 0 0;border-style:solid;border-width:1px;cursor:pointer;transition:all .3s;"></div></div>`;
+  }).join('');
+  if (lbls) {
+    lbls.innerHTML = MESES.map((m,i)=>{
+      const isMes=i===mesAct&&ingAnio===anioAct;
+      return `<div style="flex:1;text-align:center;font-size:9px;color:${isMes?'var(--accent)':'var(--g)'};margin-top:5px;letter-spacing:1px;">${m}</div>`;
+    }).join('');
+  }
+}
+
+function cambiarAnio(dir) { ingAnio+=dir; renderBarChart(); }
+
+function renderListaPagos() {
+  const todos = getIng();
+  const arr   = filtroActual==='todo'?todos:todos.filter(p=>p.tipo===filtroActual);
+  const cont  = document.getElementById('lista-pagos');
+  if (!cont) return;
+  if (arr.length===0){
+    cont.innerHTML=`<div class="empty-state">${filtroActual==='todo'?'No hay pagos registrados.':'No hay '+filtroActual+'s registrados.'}</div>`;
+    return;
+  }
+  cont.innerHTML = arr.map(p=>{
+    const d=new Date(p.fecha);
+    const fs=isNaN(d.getTime())?p.fecha:d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
+    return `<div class="pago-item">
+      <div class="pago-icon ${METODO_CLS[p.metodo]||'otro'}">${METODO_ICON[p.metodo]||'💳'}</div>
+      <div class="pago-info">
+        <div class="pago-nombre">${p.concepto}${p.cliente?` — <span style="color:var(--g)">${p.cliente}</span>`:''}</div>
+        <div class="pago-meta">${p.metodo} · ${fs}${p.notas?' · '+p.notas:''}</div>
+      </div>
+      <div class="pago-valor ${p.tipo==='egreso'?'egreso':''}">${p.tipo==='egreso'?'−':'+'}${fmtCOP(p.valor)}</div>
+      <button class="btn-del" style="padding:3px 10px;font-size:10px;" onclick="eliminarPago(${p.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function switchIngTab(tab, btn) {
+  ['nuevo','historial','pse'].forEach(t=>{
+    const el=document.getElementById('ingtab-'+t);
+    if(el) el.style.display=t===tab?'block':'none';
+  });
+  document.querySelectorAll('.card .metodo-tabs .metodo-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  if(tab==='historial') renderListaPagos();
+}
+
+function selProv(prov) {
+  ['wompi','epayco','payu','mercadopago'].forEach(p=>{
+    const card=document.getElementById('prov-'+p);
+    const guia=document.getElementById('pse-guia-'+p);
+    if(card) card.classList.toggle('sel', p===prov);
+    if(guia) guia.style.display=p===prov?'block':'none';
+  });
 }
 
 // ============================================================
 // DASHBOARD
 // ============================================================
 function renderDashboard() {
-  const proy  = getProy();
-  const msgs  = getMsg();
-  const noL   = msgs.filter(m => !m.leido).length;
-
-  const np = document.getElementById('dash-nproyectos');
-  const nm = document.getElementById('dash-nmensajes');
+  const proy = getProy();
+  const msgs = getMsg();
+  const noL  = msgs.filter(m=>!m.leido).length;
+  const np   = document.getElementById('dash-nproyectos');
+  const nm   = document.getElementById('dash-nmensajes');
   if (np) np.textContent = proy.length;
   if (nm) nm.textContent = noL;
-
   const tbody = document.getElementById('dash-tabla');
   if (tbody) {
-    if (proy.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Sin proyectos. <a href="#" onclick="showPage('nuevo-proyecto',null);return false;" style="color:var(--accent);">Crear uno →</a></td></tr>`;
+    if (proy.length===0) {
+      tbody.innerHTML=`<tr><td colspan="5" class="empty-state">Sin proyectos. <a href="#" onclick="showPage('nuevo-proyecto',null);return false;" style="color:var(--accent);">Crear uno →</a></td></tr>`;
     } else {
-      tbody.innerHTML = proy.slice(0,4).map(p => `
+      tbody.innerHTML = proy.slice(0,4).map(p=>`
         <tr>
-          <td>${p.nombre}</td>
-          <td>${p.cliente}</td>
+          <td>${p.nombre}</td><td>${p.cliente}</td>
           <td><span class="badge ${PLAN_BADGE[p.plan]||'badge-purple'}">${p.plan}</span></td>
           <td><span class="badge ${ESTADO_BADGE[p.estado]||'badge-red'}">${p.estado}</span></td>
           <td><div class="progress-bar-wrap"><div class="progress-bar" style="width:${ESTADO_PCT[p.estado]||10}%;background:${ESTADO_COLOR[p.estado]||'var(--accent)'};"></div></div></td>
-        </tr>
-      `).join('');
+        </tr>`).join('');
     }
   }
   actualizarBadge();
@@ -550,12 +1212,17 @@ function renderDashboard() {
 window.addEventListener('DOMContentLoaded', () => {
   renderDashboard();
   actualizarBadge();
+  // Fecha de hoy en formulario de ingreso
+  const fd = document.getElementById('ing-fecha');
+  if (fd) fd.value = new Date().toISOString().split('T')[0];
 });
 
-// Escuchar mensajes nuevos desde index.html (otra pestaña)
+// Sincronización entre pestañas del MISMO dispositivo
 window.addEventListener('storage', e => {
   if (e.key === K_MSG)  { renderMensajes(); renderDashboard(); }
   if (e.key === K_PROY) { renderProyectos(); renderDashboard(); }
+  if (e.key === K_ING)  { renderIngStats(); renderBarChart(); renderListaPagos(); }
+  if (e.key === K_CLI)  { renderClientes(); }
 });
 </script>
 </body>
